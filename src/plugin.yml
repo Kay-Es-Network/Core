@@ -1,0 +1,34 @@
+name: KayEs-Core
+author: KayEs
+version: 1.0
+description: Core Kay-Es
+api-version: 1.13
+main: it.kayes.core.main.Main
+
+commands:
+    tpa:
+        description: Invia una richiesta di teletrasporto ad un giocatore
+        default: true
+    tpahere:
+        description: Invia una richiesta di teletrasporto ad un giocatore nella tua posizione
+        default: true
+    tpaccept:
+        description: Accetta una richiesta di teletrasporto
+        default: true
+        alias: [tpyes]
+    tpdeny:
+        description: Rifiuta una richiesta di teletrasporto
+        default: true
+        alias: [tpno]
+    tpcancel:
+        description: Cancella una richiesta di teletrasporto
+        default: true
+    tp:
+        description: Teletrasportati da un giocatore
+        default: OP
+    tphere:
+        description: Teletrasporta un giocatore da te
+        default: OP
+    tpall:
+        description: Teletrasporta tutti i giocatori da te
+        default: OP
