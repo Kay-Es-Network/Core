@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import it.kayes.core.functions.Animation;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.functions.Teleport;
 import it.kayes.core.main.utils;
@@ -183,9 +184,13 @@ public class TeleportCommands implements CommandExecutor {
 			
 			Teleport.cancelRequest(v.getName());
 			
-			if (tp.isTphere()) 
+			if (tp.isTphere()) {
 				v.teleport(p);
-			else p.teleport(v);
+				Animation.createTeleportAnimation(v.getLocation());
+			} else {
+				p.teleport(v);
+				Animation.createTeleportAnimation(p.getLocation());
+			}
 			
 			msg = Messages.getMessage("teleport.requestaccept-send");
 			for (String s : msg)
@@ -194,6 +199,7 @@ public class TeleportCommands implements CommandExecutor {
 			msg = Messages.getMessage("teleport.requestaccept-you");
 			for (String s : msg)
 				utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%VICTIM%", p.getName()).replaceAll("%SENDER%", v.getName()));
+		
 			
 			return true;
 		} else if (cmd.getName().equalsIgnoreCase("tpdeny") || cmd.getName().equalsIgnoreCase("tpno")) {
