@@ -1,0 +1,62 @@
+name: KayEs-Core
+author: KayEs
+version: 1.0
+description: Core Kay-Es
+api-version: 1.13
+main: it.kayes.core.main.Main
+
+commands:
+    tpa:
+        description: Invia una richiesta di teletrasporto ad un giocatore
+        default: true
+    tpahere:
+        description: Invia una richiesta di teletrasporto ad un giocatore nella tua posizione
+        default: true
+    tpaccept:
+        description: Accetta una richiesta di teletrasporto
+        default: true
+        alias: [tpyes]
+    tpdeny:
+        description: Rifiuta una richiesta di teletrasporto
+        default: true
+        alias: [tpno]
+    tpcancel:
+        description: Cancella una richiesta di teletrasporto
+        default: true
+    tp:
+        description: Teletrasportati da un giocatore
+        default: OP
+    tphere:
+        description: Teletrasporta un giocatore da te
+        default: OP
+    tpall:
+        description: Teletrasporta tutti i giocatori da te
+        default: OP
+    home:
+        description: Teletrasportati alla tua home
+        default: true
+    homes:
+        description: Visualizza le tue homes
+        default: true
+    sethome:
+        description: Imposta una nuova home
+        default: true
+    delhome:
+        description: Rimuovi una home
+        default: true
+    adminhome:
+        aliases: [ahome]
+        description: ADMIN Teletrasportati alla home di un giocatore
+        default: true
+    adminhomes:
+        aliases: [ahomes]
+        description: ADMIN Visualizza tutte le homes di un giocatore
+        default: true
+    adminsethome:
+        aliases: [asethome]
+        description: ADMIN Imposta una nuova home ad un giocatore
+        default: true
+    admindelhome:
+        aliases: [adelhome]
+        description: ADMIN Rimuovi una home ad un giocatore
+        default: true
