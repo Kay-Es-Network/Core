@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import it.kayes.core.commands.HomeCommands;
 import it.kayes.core.commands.TeleportCommands;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.listeners.UserLoader;
@@ -42,6 +43,10 @@ public class Main extends JavaPlugin {
 		this.getCommand("tp").setExecutor(new TeleportCommands());
 		this.getCommand("tphere").setExecutor(new TeleportCommands());
 		this.getCommand("tpall").setExecutor(new TeleportCommands());
+		this.getCommand("home").setExecutor(new HomeCommands());
+		this.getCommand("homes").setExecutor(new HomeCommands());
+		this.getCommand("sethome").setExecutor(new HomeCommands());
+		this.getCommand("delhome").setExecutor(new HomeCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);

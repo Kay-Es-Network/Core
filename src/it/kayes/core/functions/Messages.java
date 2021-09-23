@@ -63,6 +63,18 @@ public class Messages {
 			cfg.set("teleport.alredyrequest", new String[] {"","%PREFIX% &fRichiesta già inviata",""});
 			cfg.set("teleport.request-self", new String[] {"","%PREFIX% &fNon puoi inviare una richiesta a te stesso",""});
 			
+			//HOMES
+			cfg.set("home.nohome", new String[] {"","%PREFIX% &fNon possiedi nessuna home",""});
+			cfg.set("home.notexisthome", new String[] {"","%PREFIX% &fNon possiedi nessuna home con questo nome",""});
+			cfg.set("home.tp", new String[] {"","%PREFIX% &fTi sei teletrasportato alla home &b%HOME%",""});
+			cfg.set("home.homes", new String[] {"","%PREFIX% &fLe tue home sono: %HOMES%",""});
+			cfg.set("home.homesformat", new String[] {"&7%HOME%"});
+			cfg.set("home.homesseparator", new String[] {"&f, "});
+			cfg.set("home.noname", new String[] {"","%PREFIX% &fInserisci il nome della home",""});
+			cfg.set("home.set", new String[] {"","%PREFIX% &fHai impostato una nuova home",""});
+			cfg.set("home.remove", new String[] {"","%PREFIX% &fHai eliminato una home",""});
+			cfg.set("home.toohome", new String[] {"","%PREFIX% &fHai raggiunto il massimo di home impostabili",""});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -97,6 +109,18 @@ public class Messages {
 		getMessages().put("teleport.notrequest", (String[]) cfg.getStringList("teleport.notrequest").toArray(new String[cfg.getStringList("teleport.notrequest").size()]));
 		getMessages().put("teleport.alredyrequest", (String[]) cfg.getStringList("teleport.alredyrequest").toArray(new String[cfg.getStringList("teleport.alredyrequest").size()]));
 		getMessages().put("teleport.request-self", (String[]) cfg.getStringList("teleport.request-self").toArray(new String[cfg.getStringList("teleport.request-self").size()]));
+	
+		//HOMES
+		getMessages().put("home.nohome", (String[]) cfg.getStringList("home.nohome").toArray(new String[cfg.getStringList("home.nohome").size()]));
+		getMessages().put("home.notexisthome", (String[]) cfg.getStringList("home.notexisthome").toArray(new String[cfg.getStringList("home.notexisthome").size()]));
+		getMessages().put("home.tp", (String[]) cfg.getStringList("home.tp").toArray(new String[cfg.getStringList("home.tp").size()]));
+		getMessages().put("home.homes", (String[]) cfg.getStringList("home.homes").toArray(new String[cfg.getStringList("home.homes").size()]));
+		getMessages().put("home.homesformat", (String[]) cfg.getStringList("home.homesformat").toArray(new String[cfg.getStringList("home.homesformat").size()]));
+		getMessages().put("home.homesseparator", (String[]) cfg.getStringList("home.homesseparator").toArray(new String[cfg.getStringList("home.homesseparator").size()]));
+		getMessages().put("home.noname", (String[]) cfg.getStringList("home.noname").toArray(new String[cfg.getStringList("home.noname").size()]));
+		getMessages().put("home.set", (String[]) cfg.getStringList("home.set").toArray(new String[cfg.getStringList("home.set").size()]));
+		getMessages().put("home.remove", (String[]) cfg.getStringList("home.remove").toArray(new String[cfg.getStringList("home.remove").size()]));
+		getMessages().put("home.toohome", (String[]) cfg.getStringList("home.toohome").toArray(new String[cfg.getStringList("home.toohome").size()]));
 	}
 
 }

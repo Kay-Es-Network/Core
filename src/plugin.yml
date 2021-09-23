@@ -32,3 +32,15 @@ commands:
     tpall:
         description: Teletrasporta tutti i giocatori da te
         default: OP
+    home:
+        description: Teletrasportati alla tua home
+        default: true
+    homes:
+        description: Visualizza le tue homes
+        default: true
+    sethome:
+        description: Imposta una nuova home
+        default: true
+    delhome:
+        description: Rimuovi una home
+        default: true
