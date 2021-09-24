@@ -101,6 +101,10 @@ public class UserLoader implements Listener {
 			
 			cfg.set("users."+u.getName()+".homes", homes);
 		}
+		
+		try {
+			cfg.save(f);
+		} catch (IOException e) {}
 	}
 	
 	@EventHandler

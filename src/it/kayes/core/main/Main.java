@@ -12,10 +12,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import it.kayes.core.commands.AdminHomeCommands;
 import it.kayes.core.commands.HomeCommands;
 import it.kayes.core.commands.TeleportCommands;
+import it.kayes.core.commands.WarpCommands;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.listeners.UserLoader;
+import it.kayes.core.listeners.WarpsLoader;
 
 public class Main extends JavaPlugin {
 
@@ -47,6 +50,14 @@ public class Main extends JavaPlugin {
 		this.getCommand("homes").setExecutor(new HomeCommands());
 		this.getCommand("sethome").setExecutor(new HomeCommands());
 		this.getCommand("delhome").setExecutor(new HomeCommands());
+		this.getCommand("adminhome").setExecutor(new AdminHomeCommands());
+		this.getCommand("adminhomes").setExecutor(new AdminHomeCommands());
+		this.getCommand("adminsethome").setExecutor(new AdminHomeCommands());
+		this.getCommand("admindelhome").setExecutor(new AdminHomeCommands());
+		this.getCommand("warp").setExecutor(new WarpCommands());
+		this.getCommand("warps").setExecutor(new WarpCommands());
+		this.getCommand("setwarp").setExecutor(new WarpCommands());
+		this.getCommand("delwarp").setExecutor(new WarpCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);
@@ -57,7 +68,7 @@ public class Main extends JavaPlugin {
 		} catch (SQLException e) {e.printStackTrace();}
 		
 		Messages.load();
-		
+		WarpsLoader.load();
 	}
 	
 	@Override
@@ -65,6 +76,7 @@ public class Main extends JavaPlugin {
 		//Listeners
 		try {
 			UserLoader.save();
+			WarpsLoader.save();
 		} catch (SQLException e) {e.printStackTrace();}
 	}
 

@@ -75,6 +75,26 @@ public class Messages {
 			cfg.set("home.remove", new String[] {"","%PREFIX% &fHai eliminato una home",""});
 			cfg.set("home.toohome", new String[] {"","%PREFIX% &fHai raggiunto il massimo di home impostabili",""});
 			
+			//ADMINHOMES
+			cfg.set("adminhome.nohome", new String[] {"","%PREFIX% &b%VICTIM% &fnon possiede nessuna home",""});
+			cfg.set("adminhome.notexisthome", new String[] {"","%PREFIX% &b%VICTIM% &fnon possiede nessuna home con questo nome",""});
+			cfg.set("adminhome.tp", new String[] {"","%PREFIX% &fTi sei teletrasportato alla home &b%HOME% &fdi &b%VICTIM%",""});
+			cfg.set("adminhome.homes", new String[] {"","%PREFIX% &fLe home di &b%VICTIM% sono: %HOMES%",""});
+			cfg.set("adminhome.homesformat", new String[] {"&7%HOME%"});
+			cfg.set("adminhome.homesseparator", new String[] {"&f, "});
+			cfg.set("adminhome.noname", new String[] {"","%PREFIX% &fInserisci il nome della home",""});
+			cfg.set("adminhome.set", new String[] {"","%PREFIX% &fHai impostato una nuova home per &b%VICTIM%",""});
+			cfg.set("adminhome.remove", new String[] {"","%PREFIX% &fHai eliminato una home di &b%VICTIM%",""});
+			
+			//WARPS
+			cfg.set("warps.nowarp", new String[] {"","%PREFIX% &fQuesto warp non esiste",""});
+			cfg.set("warps.tp", new String[] {"","%PREFIX% &fTi sei teletraportato allo warp &b%WARP%",""});
+			cfg.set("warps.set", new String[] {"","%PREFIX% &fHai settato un nuovo warp",""});
+			cfg.set("warps.remove", new String[] {"","%PREFIX% &fHai eliminato uno warp",""});
+			cfg.set("warps.warps", new String[] {"","%PREFIX% &fLista warps: %WARPS%",""});
+			cfg.set("warps.warpsformat", new String[] {"&7%WARP%"});
+			cfg.set("warps.warpsseparator", new String[] {"&f, "});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -121,6 +141,26 @@ public class Messages {
 		getMessages().put("home.set", (String[]) cfg.getStringList("home.set").toArray(new String[cfg.getStringList("home.set").size()]));
 		getMessages().put("home.remove", (String[]) cfg.getStringList("home.remove").toArray(new String[cfg.getStringList("home.remove").size()]));
 		getMessages().put("home.toohome", (String[]) cfg.getStringList("home.toohome").toArray(new String[cfg.getStringList("home.toohome").size()]));
+
+		//ADMINHOMES
+		getMessages().put("adminhome.nohome", (String[]) cfg.getStringList("adminhome.nohome").toArray(new String[cfg.getStringList("adminhome.nohome").size()]));
+		getMessages().put("adminhome.notexisthome", (String[]) cfg.getStringList("adminhome.notexisthome").toArray(new String[cfg.getStringList("adminhome.notexisthome").size()]));
+		getMessages().put("adminhome.tp", (String[]) cfg.getStringList("adminhome.tp").toArray(new String[cfg.getStringList("adminhome.tp").size()]));
+		getMessages().put("adminhome.homes", (String[]) cfg.getStringList("adminhome.homes").toArray(new String[cfg.getStringList("adminhome.homes").size()]));
+		getMessages().put("adminhome.homesformat", (String[]) cfg.getStringList("adminhome.homesformat").toArray(new String[cfg.getStringList("adminhome.homesformat").size()]));
+		getMessages().put("adminhome.homesseparator", (String[]) cfg.getStringList("adminhome.homesseparator").toArray(new String[cfg.getStringList("adminhome.homesseparator").size()]));
+		getMessages().put("adminhome.noname", (String[]) cfg.getStringList("adminhome.noname").toArray(new String[cfg.getStringList("adminhome.noname").size()]));
+		getMessages().put("adminhome.set", (String[]) cfg.getStringList("adminhome.set").toArray(new String[cfg.getStringList("adminhome.set").size()]));
+		getMessages().put("adminhome.remove", (String[]) cfg.getStringList("adminhome.remove").toArray(new String[cfg.getStringList("adminhome.remove").size()]));
+		
+		//ADMINHOMES
+		getMessages().put("warps.nowarp", (String[]) cfg.getStringList("warps.nowarp").toArray(new String[cfg.getStringList("warps.nowarp").size()]));
+		getMessages().put("warps.tp", (String[]) cfg.getStringList("warps.tp").toArray(new String[cfg.getStringList("warps.tp").size()]));
+		getMessages().put("warps.set", (String[]) cfg.getStringList("warps.set").toArray(new String[cfg.getStringList("warps.set").size()]));
+		getMessages().put("warps.remove", (String[]) cfg.getStringList("warps.remove").toArray(new String[cfg.getStringList("warps.remove").size()]));
+		getMessages().put("warps.warpsformat", (String[]) cfg.getStringList("warps.warpsformat").toArray(new String[cfg.getStringList("warps.warpsformat").size()]));
+		getMessages().put("warps.warpsseparator", (String[]) cfg.getStringList("warps.warpsseparator").toArray(new String[cfg.getStringList("warps.warpsseparator").size()]));
+		getMessages().put("warps.warps", (String[]) cfg.getStringList("warps.warps").toArray(new String[cfg.getStringList("warps.warps").size()]));
 	}
 
 }
