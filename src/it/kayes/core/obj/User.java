@@ -1,11 +1,23 @@
 package it.kayes.core.obj;
 
+import org.bukkit.inventory.Inventory;
+
 public class User {
 
 	String name;
 	String uuid;
 
 	Home[] homes;
+	
+	Inventory inv;
+
+	public Inventory getInv() {
+		return inv;
+	}
+
+	public void setInv(Inventory inv) {
+		this.inv = inv;
+	}
 
 	public String getName() {
 		return name;

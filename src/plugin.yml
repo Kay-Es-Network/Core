@@ -72,3 +72,12 @@ commands:
     delwarp:
         description: Rimuovi uno warp
         default: OP
+    repair:
+        description: Ripara un oggetto
+        default: true
+    repairall:
+        description: Ripara tutti gli oggetti nel tuo inventario
+        default: true
+    invsee:
+        description: Apri l'inventario di un giocatore
+        default: OP

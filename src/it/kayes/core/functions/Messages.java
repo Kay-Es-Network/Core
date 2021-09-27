@@ -44,6 +44,8 @@ public class Messages {
 			cfg.set("error.player-notonline", new String[] {"%PREFIX% &fIl giocatore non è online"});
 			cfg.set("error.player-notexist", new String[] {"%PREFIX% &fIl giocatore non esiste"});
 			cfg.set("error.player-notconsole", new String[] {"%PREFIX% &fSolo un giocatore può eseguire questa azione"});
+			cfg.set("error.player-notsender", new String[] {"%PREFIX% &fNon puoi inserire il tuo nome"});
+			cfg.set("error.invalid-item", new String[] {"%PREFIX% &fQuesto oggetto è invalido"});
 			
 			//TELEPORTS
 			cfg.set("teleport.request", new String[] {"","%PREFIX% &b%SENDER% &fvuole teletrasportarsi da te &7[%ACCEPT%&7] &7[%DENY%&7]",""});
@@ -95,6 +97,10 @@ public class Messages {
 			cfg.set("warps.warpsformat", new String[] {"&7%WARP%"});
 			cfg.set("warps.warpsseparator", new String[] {"&f, "});
 			
+			//REPAIR
+			cfg.set("repair.do", new String[] {"","%PREFIX% &fOggetto riparato",""});
+			cfg.set("repair.doall", new String[] {"","%PREFIX% &fTutti gli oggetti nel tuo inventario sono stati riparati",""});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -111,6 +117,8 @@ public class Messages {
 		getMessages().put("error.player-notonline", (String[]) cfg.getStringList("error.player-notonline").toArray(new String[cfg.getStringList("error.player-notonline").size()]));
 		getMessages().put("error.player-notexist", (String[]) cfg.getStringList("error.player-notexist").toArray(new String[cfg.getStringList("error.player-notexist").size()]));
 		getMessages().put("error.player-notconsole", (String[]) cfg.getStringList("error.player-notconsole").toArray(new String[cfg.getStringList("error.player-notconsole").size()]));
+		getMessages().put("error.player-notsender", (String[]) cfg.getStringList("error.player-notsender").toArray(new String[cfg.getStringList("error.player-notsender").size()]));
+		getMessages().put("error.invalid-item", (String[]) cfg.getStringList("error.invalid-item").toArray(new String[cfg.getStringList("error.invalid-item").size()]));
 		
 		//TELEPORTS
 		getMessages().put("teleport.request", (String[]) cfg.getStringList("teleport.request").toArray(new String[cfg.getStringList("teleport.request").size()]));
@@ -153,7 +161,7 @@ public class Messages {
 		getMessages().put("adminhome.set", (String[]) cfg.getStringList("adminhome.set").toArray(new String[cfg.getStringList("adminhome.set").size()]));
 		getMessages().put("adminhome.remove", (String[]) cfg.getStringList("adminhome.remove").toArray(new String[cfg.getStringList("adminhome.remove").size()]));
 		
-		//ADMINHOMES
+		//WARPS
 		getMessages().put("warps.nowarp", (String[]) cfg.getStringList("warps.nowarp").toArray(new String[cfg.getStringList("warps.nowarp").size()]));
 		getMessages().put("warps.tp", (String[]) cfg.getStringList("warps.tp").toArray(new String[cfg.getStringList("warps.tp").size()]));
 		getMessages().put("warps.set", (String[]) cfg.getStringList("warps.set").toArray(new String[cfg.getStringList("warps.set").size()]));
@@ -161,6 +169,11 @@ public class Messages {
 		getMessages().put("warps.warpsformat", (String[]) cfg.getStringList("warps.warpsformat").toArray(new String[cfg.getStringList("warps.warpsformat").size()]));
 		getMessages().put("warps.warpsseparator", (String[]) cfg.getStringList("warps.warpsseparator").toArray(new String[cfg.getStringList("warps.warpsseparator").size()]));
 		getMessages().put("warps.warps", (String[]) cfg.getStringList("warps.warps").toArray(new String[cfg.getStringList("warps.warps").size()]));
+	
+		//WARPS
+		getMessages().put("repair.do", (String[]) cfg.getStringList("repair.do").toArray(new String[cfg.getStringList("repair.do").size()]));
+		getMessages().put("repair.doall", (String[]) cfg.getStringList("repair.doall").toArray(new String[cfg.getStringList("repair.doall").size()]));
+
 	}
 
 }

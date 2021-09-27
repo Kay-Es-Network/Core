@@ -2,7 +2,6 @@ package it.kayes.core.listeners;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +14,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 
 import it.kayes.core.main.Main;
 import it.kayes.core.obj.Home;
@@ -45,9 +47,12 @@ public class UserLoader implements Listener {
 	}
 	
 	//DATABASE LOAD
+	@SuppressWarnings("deprecation")
 	public static void load() throws SQLException {
 		File f = new File("plugins/KayEs-Core" + File.separator + "users.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
+		
+		Inventory inv = Bukkit.createInventory(null, InventoryType.PLAYER);
 		
 		if (!f.exists()) {
 			try {
@@ -55,14 +60,17 @@ public class UserLoader implements Listener {
 			} catch (IOException e) {}
 		}
 		
-		ResultSet rs = Main.getSQL().executeQuery("SELECT * FROM "+Main.usertable);
+		//ResultSet rs = Main.getSQL().executeQuery("SELECT * FROM "+Main.usertable);
 		
-		while(rs.next()) {
-			User u = new User();
-			u.setUuid(rs.getString("UUID"));
-			u.setName(rs.getString("NICKNAME"));
+		if (cfg.getString("users")!=null)
+		for (String user : cfg.getConfigurationSection("users").getKeys(false)) {
+			inv = Bukkit.createInventory(null, InventoryType.PLAYER);
 			
-			List<String> x = cfg.getStringList("users."+u.getName()+".homes"); //World,x,y,z,pitch,yaw,name
+			User u = new User();
+			u.setUuid(Bukkit.getOfflinePlayer(user).getUniqueId().toString());
+			u.setName(user);
+			
+			List<String> x = cfg.getStringList("users."+user+".homes"); //World,x,y,z,pitch,yaw,name
 			Home[] homes = new Home[x.size()];
 			
 			for (byte i = 0; i<x.size(); i++) {
@@ -71,9 +79,15 @@ public class UserLoader implements Listener {
 				loc.setPitch(Float.valueOf(param[4]));
 				loc.setYaw(Float.valueOf(param[5]));
 				homes[i] = new Home(param[6],loc);
-			}
+			} 
+			
+			if (cfg.getString("users."+u.getName()+".inventory")!=null) 
+				for (String key : cfg.getConfigurationSection("users."+user+".inventory").getKeys(false))
+					inv.setItem(Integer.valueOf(key), cfg.getItemStack("users."+user+".inventory."+key));
 			
 			u.setHomes(homes);
+			
+			u.setInv(inv);
 			
 			addUser(u);
 		}
@@ -94,12 +108,21 @@ public class UserLoader implements Listener {
 					+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");
 			
 			homes.clear();
-			
-			for (Home h : u.getHomes())
-				homes.add(h.getLoc().getWorld().getName()+";"+h.getLoc().getX()+";"+h.getLoc().getY()+";"+h.getLoc().getZ()
-						+";"+h.getLoc().getPitch()+";"+h.getLoc().getYaw()+";"+h.getName());
+			if (u.getHomes()!=null)
+				for (Home h : u.getHomes())
+					homes.add(h.getLoc().getWorld().getName()+";"+h.getLoc().getX()+";"+h.getLoc().getY()+";"+h.getLoc().getZ()
+							+";"+h.getLoc().getPitch()+";"+h.getLoc().getYaw()+";"+h.getName());
 			
 			cfg.set("users."+u.getName()+".homes", homes);
+			
+			Player p = Bukkit.getPlayerExact(u.getName());
+			
+			if (p==null)
+				for (byte i = 0; i<u.getInv().getSize(); i++)
+					cfg.set("users."+u.getName()+".inventory."+i, u.getInv().getItem(i));
+			else
+				for (byte i = 0; i<p.getInventory().getSize(); i++)
+					cfg.set("users."+u.getName()+".inventory."+i, p.getInventory().getItem(i));
 		}
 		
 		try {
@@ -110,14 +133,36 @@ public class UserLoader implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
+		User u = getUser(p.getName());
 		
-		if (getUser(p.getName())==null) {
-			User u = new User();
+		if (u==null) {
+			u = new User();
 			u.setName(p.getName());
 			u.setUuid(p.getUniqueId().toString());
+			u.setInv(p.getInventory());
+			u.setHomes(new Home[0]);
 			
 			addUser(u);
 		}
+		
+		for (byte i = 0; i<u.getInv().getSize(); i++)
+			p.getInventory().setItem(i, u.getInv().getItem(i));
+	}
+	
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e) {
+		Player p = e.getPlayer();
+		User u = getUser(p.getName());
+		
+		if (u==null) {
+			u = new User();
+			u.setName(p.getName());
+			u.setUuid(p.getUniqueId().toString());
+		}
+		
+		u.setInv(p.getInventory());
+		
+		addUser(u);	
 	}
 	
 }

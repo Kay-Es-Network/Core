@@ -14,8 +14,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import it.kayes.core.commands.AdminHomeCommands;
 import it.kayes.core.commands.HomeCommands;
+import it.kayes.core.commands.InventoryCommands;
 import it.kayes.core.commands.TeleportCommands;
 import it.kayes.core.commands.WarpCommands;
+import it.kayes.core.functions.InventoryModifyEvent;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.listeners.UserLoader;
 import it.kayes.core.listeners.WarpsLoader;
@@ -58,9 +60,13 @@ public class Main extends JavaPlugin {
 		this.getCommand("warps").setExecutor(new WarpCommands());
 		this.getCommand("setwarp").setExecutor(new WarpCommands());
 		this.getCommand("delwarp").setExecutor(new WarpCommands());
+		this.getCommand("repair").setExecutor(new InventoryCommands());
+		this.getCommand("repairall").setExecutor(new InventoryCommands());
+		this.getCommand("invsee").setExecutor(new InventoryCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);
+		getServer().getPluginManager().registerEvents((Listener)new InventoryModifyEvent(),this);
 		
 		//Listeners
 		try {
