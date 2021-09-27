@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
-import it.kayes.core.main.Main;
 import it.kayes.core.obj.Home;
 import it.kayes.core.obj.User;
 
@@ -53,6 +52,7 @@ public class UserLoader implements Listener {
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 		
 		Inventory inv = Bukkit.createInventory(null, InventoryType.PLAYER);
+		Inventory end = Bukkit.createInventory(null, InventoryType.ENDER_CHEST);
 		
 		if (!f.exists()) {
 			try {
@@ -65,6 +65,7 @@ public class UserLoader implements Listener {
 		if (cfg.getString("users")!=null)
 		for (String user : cfg.getConfigurationSection("users").getKeys(false)) {
 			inv = Bukkit.createInventory(null, InventoryType.PLAYER);
+			end = Bukkit.createInventory(null, InventoryType.ENDER_CHEST);
 			
 			User u = new User();
 			u.setUuid(Bukkit.getOfflinePlayer(user).getUniqueId().toString());
@@ -81,13 +82,18 @@ public class UserLoader implements Listener {
 				homes[i] = new Home(param[6],loc);
 			} 
 			
-			if (cfg.getString("users."+u.getName()+".inventory")!=null) 
+			if (cfg.getString("users."+user+".inventory")!=null) 
 				for (String key : cfg.getConfigurationSection("users."+user+".inventory").getKeys(false))
 					inv.setItem(Integer.valueOf(key), cfg.getItemStack("users."+user+".inventory."+key));
+			
+			if (cfg.getString("users."+user+".enderchest")!=null) 
+				for (String key : cfg.getConfigurationSection("users."+user+".enderchest").getKeys(false))
+					end.setItem(Integer.valueOf(key), cfg.getItemStack("users."+user+".enderchest."+key));
 			
 			u.setHomes(homes);
 			
 			u.setInv(inv);
+			u.setEnderchest(end);
 			
 			addUser(u);
 		}
@@ -101,11 +107,11 @@ public class UserLoader implements Listener {
 		
 		if (f.exists()) f.delete();
 		
-		Main.getSQL().executeUpdate("TRUNCATE "+Main.usertable);
+		//Main.getSQL().executeUpdate("TRUNCATE "+Main.usertable);
 		
 		for (User u : getUsers().values()) {
-			Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
-					+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");
+			/*Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
+					+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");*/
 			
 			homes.clear();
 			if (u.getHomes()!=null)
@@ -117,12 +123,19 @@ public class UserLoader implements Listener {
 			
 			Player p = Bukkit.getPlayerExact(u.getName());
 			
-			if (p==null)
+			if (p==null) {
 				for (byte i = 0; i<u.getInv().getSize(); i++)
 					cfg.set("users."+u.getName()+".inventory."+i, u.getInv().getItem(i));
-			else
+				
+				for (byte i = 0; i<u.getInv().getSize(); i++)
+					cfg.set("users."+u.getName()+".enderchest."+i, u.getEnderchest().getItem(i));
+			} else {
 				for (byte i = 0; i<p.getInventory().getSize(); i++)
 					cfg.set("users."+u.getName()+".inventory."+i, p.getInventory().getItem(i));
+
+				for (byte i = 0; i<u.getInv().getSize(); i++)
+					cfg.set("users."+u.getName()+".enderchest."+i, p.getEnderChest().getItem(i));
+			}
 		}
 		
 		try {
@@ -140,6 +153,7 @@ public class UserLoader implements Listener {
 			u.setName(p.getName());
 			u.setUuid(p.getUniqueId().toString());
 			u.setInv(p.getInventory());
+			u.setEnderchest(p.getEnderChest());
 			u.setHomes(new Home[0]);
 			
 			addUser(u);
@@ -161,6 +175,7 @@ public class UserLoader implements Listener {
 		}
 		
 		u.setInv(p.getInventory());
+		u.setEnderchest(p.getEnderChest());
 		
 		addUser(u);	
 	}

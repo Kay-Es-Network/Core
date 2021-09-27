@@ -37,6 +37,10 @@ public class Messages {
 			cfg.set("general.prefix", new String[] {"&f&lKAY-ES &b&l➤"});
 			cfg.set("general.accept", new String[] {"&a&l✔"});
 			cfg.set("general.deny", new String[] {"&c&l✘"});
+			cfg.set("general.survival", new String[] {"Sopravvivenza"});
+			cfg.set("general.creative", new String[] {"Creativa"});
+			cfg.set("general.adventure", new String[] {"Avventura"});
+			cfg.set("general.spector", new String[] {"Spettatore"});
 			
 			//ERRORI
 			cfg.set("error.nopermission", new String[] {"%PREFIX% &fNon possiedi i permessi per eseguire questa azione"});
@@ -101,6 +105,10 @@ public class Messages {
 			cfg.set("repair.do", new String[] {"","%PREFIX% &fOggetto riparato",""});
 			cfg.set("repair.doall", new String[] {"","%PREFIX% &fTutti gli oggetti nel tuo inventario sono stati riparati",""});
 			
+			//REPAIR
+			cfg.set("gamemode.change", new String[] {"","%PREFIX% &fLa tua modalità di gioco è stata cambiata in &b%GAMEMODE%",""});
+			cfg.set("gamemode.select-valid", new String[] {"","%PREFIX% &fSeleziona una modalità di gioco valida",""});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -108,6 +116,10 @@ public class Messages {
 		getMessages().put("general.prefix", cfg.getStringList("general.prefix").toArray(new String[cfg.getStringList("general.prefix").size()]));
 		getMessages().put("general.accept", (String[]) cfg.getStringList("general.accept").toArray(new String[cfg.getStringList("general.accept").size()]));
 		getMessages().put("general.deny", (String[]) cfg.getStringList("general.deny").toArray(new String[cfg.getStringList("general.deny").size()]));
+		getMessages().put("general.survival", (String[]) cfg.getStringList("general.survival").toArray(new String[cfg.getStringList("general.survival").size()]));
+		getMessages().put("general.creative", (String[]) cfg.getStringList("general.creative").toArray(new String[cfg.getStringList("general.creative").size()]));
+		getMessages().put("general.adventure", (String[]) cfg.getStringList("general.adventure").toArray(new String[cfg.getStringList("general.adventure").size()]));
+		getMessages().put("general.spector", (String[]) cfg.getStringList("general.spector").toArray(new String[cfg.getStringList("general.spector").size()]));
 		
 		prefix = ((String[]) cfg.getStringList("general.prefix").toArray(new String[cfg.getStringList("general.prefix").size()]))[0];
 		
@@ -170,9 +182,13 @@ public class Messages {
 		getMessages().put("warps.warpsseparator", (String[]) cfg.getStringList("warps.warpsseparator").toArray(new String[cfg.getStringList("warps.warpsseparator").size()]));
 		getMessages().put("warps.warps", (String[]) cfg.getStringList("warps.warps").toArray(new String[cfg.getStringList("warps.warps").size()]));
 	
-		//WARPS
+		//REPAIR
 		getMessages().put("repair.do", (String[]) cfg.getStringList("repair.do").toArray(new String[cfg.getStringList("repair.do").size()]));
 		getMessages().put("repair.doall", (String[]) cfg.getStringList("repair.doall").toArray(new String[cfg.getStringList("repair.doall").size()]));
+
+		//GAMEMODE
+		getMessages().put("gamemode.change", (String[]) cfg.getStringList("gamemode.change").toArray(new String[cfg.getStringList("gamemode.change").size()]));
+		getMessages().put("gamemode.select-valid", (String[]) cfg.getStringList("gamemode.select-valid").toArray(new String[cfg.getStringList("gamemode.select-valid").size()]));
 
 	}
 

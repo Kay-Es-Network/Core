@@ -81,3 +81,26 @@ commands:
     invsee:
         description: Apri l'inventario di un giocatore
         default: OP
+    enderchest:
+        aliases: [ec]
+        description: Apri l'enderchest di un giocatore
+        default: OP
+    clear:
+        description: Rimuovi gli oggetti da un inventario
+        default: OP
+    gamemode:
+        aliases: [gm]
+        description: Cambia modalita' di gioco
+        default: OP
+    gms:
+        description: Cambia modalita' di gioco in sopravvivenza
+        default: OP
+    gmc:
+        description: Cambia modalita' di gioco in creativa
+        default: OP
+    gmsp:
+        description: Cambia modalita' di gioco in spettatore
+        default: OP
+    gma:
+        description: Cambia modalita' di gioco in avventura
+        default: OP

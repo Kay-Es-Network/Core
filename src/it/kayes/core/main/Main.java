@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import it.kayes.core.commands.AdminHomeCommands;
+import it.kayes.core.commands.GameCommands;
 import it.kayes.core.commands.HomeCommands;
 import it.kayes.core.commands.InventoryCommands;
 import it.kayes.core.commands.TeleportCommands;
@@ -63,6 +64,13 @@ public class Main extends JavaPlugin {
 		this.getCommand("repair").setExecutor(new InventoryCommands());
 		this.getCommand("repairall").setExecutor(new InventoryCommands());
 		this.getCommand("invsee").setExecutor(new InventoryCommands());
+		this.getCommand("enderchest").setExecutor(new InventoryCommands());
+		this.getCommand("clear").setExecutor(new InventoryCommands());
+		this.getCommand("gamemode").setExecutor(new GameCommands());
+		this.getCommand("gms").setExecutor(new GameCommands());
+		this.getCommand("gmc").setExecutor(new GameCommands());
+		this.getCommand("gma").setExecutor(new GameCommands());
+		this.getCommand("gmsp").setExecutor(new GameCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);

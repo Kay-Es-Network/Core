@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 import it.kayes.core.functions.InventoryModifyEvent;
@@ -114,6 +115,86 @@ public class InventoryCommands implements CommandExecutor {
 				p.openInventory(Bukkit.getPlayer(u.getName()).getInventory());
 			
 			InventoryModifyEvent.getInvsee().put(p.getName(), u.getName());
+			
+			return true;
+		} else if (cmd.getName().equalsIgnoreCase("ec") || cmd.getName().equalsIgnoreCase("enderchest")) {
+			if (!(sender instanceof Player)) {
+				utils.sendServerMsg(sender, "error.player-notconsole");
+				return true;
+			}
+			
+			Player p = (Player) sender;
+			
+			if (args.length == 0) {
+				if (!p.hasPermission("vip") && !p.hasPermission("enderchest") || p.hasPermission("enderchest.limit") && !p.hasPermission("*")) {
+					utils.sendServerMsg(sender, "error.nopermission");
+					return true;
+				}
+				
+				p.openInventory(p.getEnderChest());
+				return true;
+			}
+			
+			if (p.getName().equalsIgnoreCase(args[0])) {
+				utils.sendServerMsg(sender, "error.player-notsender");
+				return true;
+			}
+			
+			User u = UserLoader.getUser(Bukkit.getOfflinePlayer(args[0]).getName());
+			
+			if (u == null) {
+				utils.sendServerMsg(sender, "error.player-notexist");
+				return true;
+			}
+			
+			if (Bukkit.getPlayerExact(u.getName())==null)
+				p.openInventory(u.getEnderchest());
+			else
+				p.openInventory(Bukkit.getPlayer(u.getName()).getEnderChest());
+			
+			InventoryModifyEvent.getEnderchest().put(p.getName(), u.getName());
+			
+			return true;
+		} else if (cmd.getName().equalsIgnoreCase("clear")) {
+			if (!(sender instanceof Player)) {
+				utils.sendServerMsg(sender, "error.player-notconsole");
+				return true;
+			}
+			
+			Player p = (Player) sender;
+			
+			if (!p.hasPermission("admin") && !p.hasPermission("clear") || p.hasPermission("clear.limit") && !p.hasPermission("*")) {
+				utils.sendServerMsg(sender, "error.nopermission");
+				return true;
+			}
+			
+			if (args.length == 0) {	
+				for (byte i = 0; i<p.getInventory().getSize(); i++)
+					p.getInventory().setItem(i, null);
+				
+				return true;
+			}
+			
+			if (p.getName().equalsIgnoreCase(args[0])) {
+				utils.sendServerMsg(sender, "error.player-notsender");
+				return true;
+			}
+			
+			User u = UserLoader.getUser(Bukkit.getOfflinePlayer(args[0]).getName());
+			
+			if (u == null) {
+				utils.sendServerMsg(sender, "error.player-notexist");
+				return true;
+			}
+			
+			if (Bukkit.getPlayerExact(u.getName())==null)
+				u.setInv(Bukkit.createInventory(null, InventoryType.PLAYER));
+			else {
+				Player v = Bukkit.getPlayer(args[0]);
+				
+				for (byte i = 0; i<v.getInventory().getSize(); i++)
+					v.getInventory().setItem(i, null);
+			}
 			
 			return true;
 		}

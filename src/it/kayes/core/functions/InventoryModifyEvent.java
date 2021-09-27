@@ -14,9 +14,14 @@ import it.kayes.core.obj.User;
 public class InventoryModifyEvent implements Listener {
 
 	private static HashMap<String, String> invsee = new HashMap<String, String>();
+	private static HashMap<String, String> enderchest = new HashMap<String, String>();
 	
 	public static HashMap<String, String> getInvsee() {
 		return invsee;
+	}
+	
+	public static HashMap<String, String> getEnderchest() {
+		return enderchest;
 	}
 	
 	@EventHandler
@@ -37,6 +42,24 @@ public class InventoryModifyEvent implements Listener {
 			UserLoader.setUser(u);
 			
 			getInvsee().remove(p.getName());
+			
+			return;
+		}
+		
+		if (getEnderchest().containsKey(p.getName())) {
+			User u = UserLoader.getUser(getEnderchest().get(p.getName()));
+			
+			Player v = Bukkit.getPlayerExact(u.getName());
+			
+			if (v==null)
+				u.setEnderchest(e.getInventory());
+			else
+				for (byte i = 0; i<v.getEnderChest().getSize(); i++)
+					v.getEnderChest().setItem(i, e.getInventory().getItem(i));
+			
+			UserLoader.setUser(u);
+			
+			getEnderchest().remove(p.getName());
 			
 			return;
 		}

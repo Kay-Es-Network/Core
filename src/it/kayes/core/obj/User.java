@@ -10,6 +10,15 @@ public class User {
 	Home[] homes;
 	
 	Inventory inv;
+	Inventory enderchest;
+
+	public Inventory getEnderchest() {
+		return enderchest;
+	}
+
+	public void setEnderchest(Inventory enderchest) {
+		this.enderchest = enderchest;
+	}
 
 	public Inventory getInv() {
 		return inv;
