@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-import it.kayes.core.listeners.UserLoader;
+import it.kayes.core.main.Main;
 import it.kayes.core.obj.User;
 
 public class InventoryModifyEvent implements Listener {
@@ -29,7 +29,7 @@ public class InventoryModifyEvent implements Listener {
 		Player p = (Player) e.getPlayer();
 		
 		if (getInvsee().containsKey(p.getName())) {
-			User u = UserLoader.getUser(getInvsee().get(p.getName()));
+			User u = Main.getUser(getInvsee().get(p.getName()));
 			
 			Player v = Bukkit.getPlayerExact(u.getName());
 			
@@ -39,7 +39,7 @@ public class InventoryModifyEvent implements Listener {
 				for (byte i = 0; i<v.getInventory().getSize(); i++)
 					v.getInventory().setItem(i, e.getInventory().getItem(i));
 			
-			UserLoader.setUser(u);
+			u.set();
 			
 			getInvsee().remove(p.getName());
 			
@@ -47,7 +47,7 @@ public class InventoryModifyEvent implements Listener {
 		}
 		
 		if (getEnderchest().containsKey(p.getName())) {
-			User u = UserLoader.getUser(getEnderchest().get(p.getName()));
+			User u = Main.getUser(getEnderchest().get(p.getName()));
 			
 			Player v = Bukkit.getPlayerExact(u.getName());
 			
@@ -57,7 +57,7 @@ public class InventoryModifyEvent implements Listener {
 				for (byte i = 0; i<v.getEnderChest().getSize(); i++)
 					v.getEnderChest().setItem(i, e.getInventory().getItem(i));
 			
-			UserLoader.setUser(u);
+			u.set();
 			
 			getEnderchest().remove(p.getName());
 			

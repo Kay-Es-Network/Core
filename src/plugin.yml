@@ -104,3 +104,6 @@ commands:
     gma:
         description: Cambia modalita' di gioco in avventura
         default: OP
+    speed:
+        description: Cambia la velocita' di un giocatore
+        default: OP

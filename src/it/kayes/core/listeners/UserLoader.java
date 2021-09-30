@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -19,31 +18,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
+import it.kayes.core.main.Main;
 import it.kayes.core.obj.Home;
 import it.kayes.core.obj.User;
 
 public class UserLoader implements Listener {
-
-	private static HashMap<String, User> users = new HashMap<String, User>();
-	
-	public static HashMap<String, User> getUsers() {
-		return users;
-	}
-	
-	public static User getUser(String user) {
-		return getUsers().get(user);
-	}
-	
-	public static void setUser(User user) {
-		if (getUsers().containsKey(user.getName()))
-			getUsers().replace(user.getName(), user);
-		else 
-			getUsers().put(user.getName(), user);
-	}
-	
-	public static void addUser(User user) {
-		getUsers().put(user.getName(), user);
-	}
 	
 	//DATABASE LOAD
 	@SuppressWarnings("deprecation")
@@ -90,12 +69,20 @@ public class UserLoader implements Listener {
 				for (String key : cfg.getConfigurationSection("users."+user+".enderchest").getKeys(false))
 					end.setItem(Integer.valueOf(key), cfg.getItemStack("users."+user+".enderchest."+key));
 			
+			if (cfg.getString("users."+user+".speed")!=null)
+				u.setSpeed((float)cfg.getDouble("users."+user+".speed"));
+			else u.setSpeed(1);
+			
+			if (cfg.getString("users."+user+".fly")!=null)
+				u.setFly(cfg.getBoolean("users."+user+".fly"));
+			else u.setFly(false);;
+			
 			u.setHomes(homes);
 			
 			u.setInv(inv);
 			u.setEnderchest(end);
 			
-			addUser(u);
+			u.set();
 		}
 	}
 	
@@ -109,7 +96,7 @@ public class UserLoader implements Listener {
 		
 		//Main.getSQL().executeUpdate("TRUNCATE "+Main.usertable);
 		
-		for (User u : getUsers().values()) {
+		for (User u : Main.getUsers().values()) {
 			/*Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
 					+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");*/
 			
@@ -136,6 +123,9 @@ public class UserLoader implements Listener {
 				for (byte i = 0; i<u.getInv().getSize(); i++)
 					cfg.set("users."+u.getName()+".enderchest."+i, p.getEnderChest().getItem(i));
 			}
+			
+			cfg.set("users."+u.getName()+".speed", u.getSpeed());
+			cfg.set("users."+u.getName()+".fly", u.isFly());
 		}
 		
 		try {
@@ -146,7 +136,7 @@ public class UserLoader implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		User u = getUser(p.getName());
+		User u = Main.getUser(p.getName());
 		
 		if (u==null) {
 			u = new User();
@@ -155,18 +145,25 @@ public class UserLoader implements Listener {
 			u.setInv(p.getInventory());
 			u.setEnderchest(p.getEnderChest());
 			u.setHomes(new Home[0]);
+			u.setSpeed(1);
+			u.setFly(false);
 			
-			addUser(u);
+			u.set();
 		}
 		
 		for (byte i = 0; i<u.getInv().getSize(); i++)
 			p.getInventory().setItem(i, u.getInv().getItem(i));
+		
+		p.setWalkSpeed((float)(Math.pow(u.getSpeed(), 2)*-0.01+0.2*u.getSpeed()));
+		p.setFlySpeed(u.getSpeed()/10);
+		
+		p.setAllowFlight(u.isFly());
 	}
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
-		User u = getUser(p.getName());
+		User u = Main.getUser(p.getName());
 		
 		if (u==null) {
 			u = new User();
@@ -174,10 +171,12 @@ public class UserLoader implements Listener {
 			u.setUuid(p.getUniqueId().toString());
 		}
 		
+		u.setSpeed(p.getWalkSpeed());
 		u.setInv(p.getInventory());
 		u.setEnderchest(p.getEnderChest());
+		u.setFly(p.getAllowFlight());
 		
-		addUser(u);	
+		u.set();
 	}
 	
 }

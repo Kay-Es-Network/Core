@@ -105,9 +105,18 @@ public class Messages {
 			cfg.set("repair.do", new String[] {"","%PREFIX% &fOggetto riparato",""});
 			cfg.set("repair.doall", new String[] {"","%PREFIX% &fTutti gli oggetti nel tuo inventario sono stati riparati",""});
 			
-			//REPAIR
+			//GAMEMODE
 			cfg.set("gamemode.change", new String[] {"","%PREFIX% &fLa tua modalità di gioco è stata cambiata in &b%GAMEMODE%",""});
 			cfg.set("gamemode.select-valid", new String[] {"","%PREFIX% &fSeleziona una modalità di gioco valida",""});
+			
+			//SPEED
+			cfg.set("speed.change", new String[] {"","%PREFIX% &fOra ti muoverai &bx%SPEED% &fveloce",""});
+			cfg.set("speed.other", new String[] {"","%PREFIX% &fOra &b%VICTIM%&f si muoverà &bx%SPEED% &fveloce",""});
+			cfg.set("speed.invalid", new String[] {"","%PREFIX% &fInserisci un valore compreso fra 0 e 10",""});
+			
+			//FLY
+			cfg.set("fly.enabled", new String[] {"","%PREFIX% &fVolo abilitato",""});
+			cfg.set("fly.disabled", new String[] {"","%PREFIX% &fVolo disabilitato",""});
 			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
@@ -189,6 +198,15 @@ public class Messages {
 		//GAMEMODE
 		getMessages().put("gamemode.change", (String[]) cfg.getStringList("gamemode.change").toArray(new String[cfg.getStringList("gamemode.change").size()]));
 		getMessages().put("gamemode.select-valid", (String[]) cfg.getStringList("gamemode.select-valid").toArray(new String[cfg.getStringList("gamemode.select-valid").size()]));
+
+		//SPEED
+		getMessages().put("speed.change", (String[]) cfg.getStringList("speed.change").toArray(new String[cfg.getStringList("speed.change").size()]));
+		getMessages().put("speed.other", (String[]) cfg.getStringList("speed.other").toArray(new String[cfg.getStringList("speed.other").size()]));
+		getMessages().put("speed.invalid", (String[]) cfg.getStringList("speed.invalid").toArray(new String[cfg.getStringList("speed.invalid").size()]));
+
+		//FLY
+		getMessages().put("fly.enabled", (String[]) cfg.getStringList("fly.enabled").toArray(new String[cfg.getStringList("fly.enabled").size()]));
+		getMessages().put("fly.disabled", (String[]) cfg.getStringList("fly.disabled").toArray(new String[cfg.getStringList("fly.disabled").size()]));
 
 	}
 

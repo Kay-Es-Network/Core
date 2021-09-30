@@ -25,16 +25,18 @@ public class utils {
 		return -1;
 	}
 	
-	public static void sendServerMsg(Player p, String path) {
+	public static boolean sendServerMsg(Player p, String path) {
 		String[] s = Messages.getMessage(path);
 		for (String x : s)
 			utils.sendMsg(p, x.replaceAll("%PREFIX%", Messages.getMessage("general.prefix")[0]));
+		return true;
 	}
 	
-	public static void sendServerMsg(CommandSender p, String path) {
+	public static boolean sendServerMsg(CommandSender p, String path) {
 		String[] s = Messages.getMessage(path);
 		for (String x : s)
 			utils.sendMsg(p, x.replaceAll("%PREFIX%", Messages.getPrefix()));
+		return true;
 	}
 	
 }

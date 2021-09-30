@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,11 +23,13 @@ import it.kayes.core.functions.InventoryModifyEvent;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.listeners.UserLoader;
 import it.kayes.core.listeners.WarpsLoader;
+import it.kayes.core.obj.User;
 
 public class Main extends JavaPlugin {
 
 	private static Main instance;
 	public static String usertable;
+	private static HashMap<String, User> users = new HashMap<String, User>();
 
 	@Override
 	public void onEnable() {
@@ -71,6 +74,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("gmc").setExecutor(new GameCommands());
 		this.getCommand("gma").setExecutor(new GameCommands());
 		this.getCommand("gmsp").setExecutor(new GameCommands());
+		this.getCommand("speed").setExecutor(new GameCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);
@@ -159,5 +163,14 @@ public class Main extends JavaPlugin {
 		connection.close();
 		instance.tryConnection();
 	}
+	
+	public static HashMap<String, User> getUsers() {
+		return users;
+	}
+	
+	public static User getUser(String user) {
+		return getUsers().get(user);
+	}
+	
 
 }

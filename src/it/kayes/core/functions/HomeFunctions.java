@@ -2,7 +2,6 @@ package it.kayes.core.functions;
 
 import java.util.ArrayList;
 
-import it.kayes.core.listeners.UserLoader;
 import it.kayes.core.obj.Home;
 import it.kayes.core.obj.User;
 
@@ -22,7 +21,7 @@ public class HomeFunctions {
 		homes.add(h);
 		
 		u.setHomes(homes.toArray(new Home[homes.size()]));
-		UserLoader.setUser(u);
+		u.set();
 	}
 	
 	public static void removeHome(User u, byte id) {
@@ -34,7 +33,7 @@ public class HomeFunctions {
 				homes.add(alh[i]);
 		
 		u.setHomes(homes.toArray(new Home[homes.size()]));
-		UserLoader.setUser(u);
+		u.set();
 	}
 	
 	public static boolean existHome(Home[] homes, String name) {
