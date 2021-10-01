@@ -21,6 +21,15 @@ public class User {
 	float speed;
 
 	boolean fly;
+	boolean god;
+
+	public boolean isGod() {
+		return god;
+	}
+
+	public void setGod(boolean god) {
+		this.god = god;
+	}
 
 	public static HashMap<String, User> getUsers() {
 		return users;

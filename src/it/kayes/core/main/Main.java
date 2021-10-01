@@ -75,6 +75,20 @@ public class Main extends JavaPlugin {
 		this.getCommand("gma").setExecutor(new GameCommands());
 		this.getCommand("gmsp").setExecutor(new GameCommands());
 		this.getCommand("speed").setExecutor(new GameCommands());
+		this.getCommand("fly").setExecutor(new GameCommands());
+		this.getCommand("god").setExecutor(new GameCommands());
+		this.getCommand("heal").setExecutor(new GameCommands());
+		this.getCommand("feed").setExecutor(new GameCommands());
+		this.getCommand("jump").setExecutor(new TeleportCommands());
+		this.getCommand("top").setExecutor(new TeleportCommands());
+		this.getCommand("suicide").setExecutor(new GameCommands());
+		this.getCommand("kill").setExecutor(new GameCommands());
+		this.getCommand("disposal").setExecutor(new GameCommands());
+		this.getCommand("seen").setExecutor(new GameCommands());
+		this.getCommand("hat").setExecutor(new GameCommands());
+		this.getCommand("skull").setExecutor(new GameCommands());
+		this.getCommand("near").setExecutor(new GameCommands());
+		this.getCommand("broadcast").setExecutor(new GameCommands());
 
 		// EVENTI
 		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);

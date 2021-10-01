@@ -75,7 +75,11 @@ public class UserLoader implements Listener {
 			
 			if (cfg.getString("users."+user+".fly")!=null)
 				u.setFly(cfg.getBoolean("users."+user+".fly"));
-			else u.setFly(false);;
+			else u.setFly(false);
+			
+			if (cfg.getString("users."+user+".god")!=null)
+				u.setGod(cfg.getBoolean("users."+user+".god"));
+			else u.setGod(false);
 			
 			u.setHomes(homes);
 			
@@ -95,37 +99,41 @@ public class UserLoader implements Listener {
 		if (f.exists()) f.delete();
 		
 		//Main.getSQL().executeUpdate("TRUNCATE "+Main.usertable);
-		
 		for (User u : Main.getUsers().values()) {
-			/*Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
-					+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");*/
-			
-			homes.clear();
-			if (u.getHomes()!=null)
-				for (Home h : u.getHomes())
-					homes.add(h.getLoc().getWorld().getName()+";"+h.getLoc().getX()+";"+h.getLoc().getY()+";"+h.getLoc().getZ()
-							+";"+h.getLoc().getPitch()+";"+h.getLoc().getYaw()+";"+h.getName());
-			
-			cfg.set("users."+u.getName()+".homes", homes);
-			
-			Player p = Bukkit.getPlayerExact(u.getName());
-			
-			if (p==null) {
-				for (byte i = 0; i<u.getInv().getSize(); i++)
-					cfg.set("users."+u.getName()+".inventory."+i, u.getInv().getItem(i));
+			try {
+				/*Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
+						+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");*/
 				
-				for (byte i = 0; i<u.getInv().getSize(); i++)
-					cfg.set("users."+u.getName()+".enderchest."+i, u.getEnderchest().getItem(i));
-			} else {
-				for (byte i = 0; i<p.getInventory().getSize(); i++)
-					cfg.set("users."+u.getName()+".inventory."+i, p.getInventory().getItem(i));
-
-				for (byte i = 0; i<u.getInv().getSize(); i++)
-					cfg.set("users."+u.getName()+".enderchest."+i, p.getEnderChest().getItem(i));
+				homes.clear();
+				if (u.getHomes()!=null)
+					for (Home h : u.getHomes())
+						homes.add(h.getLoc().getWorld().getName()+";"+h.getLoc().getX()+";"+h.getLoc().getY()+";"+h.getLoc().getZ()
+								+";"+h.getLoc().getPitch()+";"+h.getLoc().getYaw()+";"+h.getName());
+				
+				cfg.set("users."+u.getName()+".homes", homes);
+				
+				Player p = Bukkit.getPlayerExact(u.getName());
+				
+				if (p==null) {
+					for (byte i = 0; i<u.getInv().getSize(); i++)
+						cfg.set("users."+u.getName()+".inventory."+i, u.getInv().getItem(i));
+					
+					for (byte i = 0; i<27; i++)
+						cfg.set("users."+u.getName()+".enderchest."+i, u.getEnderchest().getItem(i));
+				} else {
+					for (byte i = 0; i<p.getInventory().getSize(); i++)
+						cfg.set("users."+u.getName()+".inventory."+i, p.getInventory().getItem(i));
+	
+					for (byte i = 0; i<27; i++)
+						cfg.set("users."+u.getName()+".enderchest."+i, p.getEnderChest().getItem(i));
+				}
+				
+				cfg.set("users."+u.getName()+".speed", u.getSpeed());
+				cfg.set("users."+u.getName()+".fly", u.isFly());
+				cfg.set("users."+u.getName()+".god", u.isGod());
+			} catch (NullPointerException exc) {
+				exc.printStackTrace();
 			}
-			
-			cfg.set("users."+u.getName()+".speed", u.getSpeed());
-			cfg.set("users."+u.getName()+".fly", u.isFly());
 		}
 		
 		try {
@@ -147,6 +155,7 @@ public class UserLoader implements Listener {
 			u.setHomes(new Home[0]);
 			u.setSpeed(1);
 			u.setFly(false);
+			u.setGod(false);
 			
 			u.set();
 		}
@@ -175,6 +184,7 @@ public class UserLoader implements Listener {
 		u.setInv(p.getInventory());
 		u.setEnderchest(p.getEnderChest());
 		u.setFly(p.getAllowFlight());
+		u.setGod(p.isInvulnerable());
 		
 		u.set();
 	}

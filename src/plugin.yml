@@ -107,3 +107,45 @@ commands:
     speed:
         description: Cambia la velocita' di un giocatore
         default: OP
+    fly:
+        description: Abilita/Disabilita la modalita' volo
+        default: OP
+    god:
+        description: Abilita/Disabilita la modalita' immortale
+        default: OP
+    heal:
+        description: Ricarica la tua barra della vita
+        default: OP
+    feed:
+        description: Ricarica la tua barra della fame
+        default: OP
+    jump:
+        description: Teletrasportati nella direzione che stai guardando
+        default: OP
+    top:
+        description: Teletrasportati nella posizione piu' alta alle tue coordinate
+        default: OP
+    kill:
+        description: Uccidi un giocatore
+        default: OP
+    suicide:
+        description: Suicidati
+        default: true
+    disposal:
+        description: Apri il cestino
+        default: true
+    skull:
+        description: Ottieni la testa di un giocatore
+        default: true
+    hat:
+        description: Indossa nella testa l'oggetti che hai in mano
+        default: true
+    seen:
+        description: Controlla l'ultimo accesso di un giocatore
+        default: true
+    near:
+        description: Controlla chi e' vicino a te
+        default: true
+    broadcast:
+        description: Invia un avviso a tutti
+        default: OP

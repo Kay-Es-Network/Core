@@ -2,6 +2,9 @@ package it.kayes.core.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -333,6 +336,58 @@ public class TeleportCommands implements CommandExecutor {
 				utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%SENDER%", p.getName()));
 
 			return true;
+		} else if (cmd.getName().equalsIgnoreCase("jump")) {
+			if (!sender.hasPermission("vip") && !sender.hasPermission("jump")
+					|| sender.hasPermission("jump.limit") && !sender.hasPermission("*"))
+				return utils.sendServerMsg(sender, "error.nopermission");
+			
+			if (!(sender instanceof Player))
+				return utils.sendServerMsg(sender, "error.player-notconsole");
+	
+			Player p = (Player) sender;
+
+			
+			if (utils.getTargetBlock(p, 30) != null) {
+				Location loc = utils.getTargetBlock(p, 30).getLocation();
+				final World world = loc.getWorld();
+			    final double x = loc.getX();
+				final double y = loc.getBlockY();
+				final double z = loc.getZ();
+				
+				for (int i = (int) y; i < 255 ;i++)		
+					if ((new Location(world,x,i,z)).getBlock().getType().equals(Material.AIR) && (new Location(world,x,i,z)).getBlock().getType().equals(Material.AIR)) {
+						p.teleport(new Location(world,x,i,z));
+						Animation.createTeleportAnimation(new Location(world,x,i,z));
+						break;
+					}
+				
+				return utils.sendServerMsg(sender, "jump.set");
+			}
+			
+			return utils.sendServerMsg(sender, "jump.null");
+		} else if (cmd.getName().equalsIgnoreCase("top")) {
+			if (!sender.hasPermission("vip") && !sender.hasPermission("top")
+					|| sender.hasPermission("top.limit") && !sender.hasPermission("*"))
+				return utils.sendServerMsg(sender, "error.nopermission");
+			
+			if (!(sender instanceof Player))
+				return utils.sendServerMsg(sender, "error.player-notconsole");
+	
+			Player p = (Player) sender;
+			
+			Location loc = p.getLocation();
+			final World world = loc.getWorld();
+			final double x = loc.getBlockX();
+			final double z = loc.getBlockZ();
+			
+			for (int i = 255; i > 0 ; i--)		
+				if (!(new Location(world,x,i,z)).getBlock().getType().equals(Material.AIR)) {
+					p.teleport(new Location(world,x,i+1,z));
+					Animation.createTeleportAnimation(new Location(world,x,i+1,z));
+					break;
+				}
+			
+			return utils.sendServerMsg(sender, "top.set");
 		}
 
 		return true;

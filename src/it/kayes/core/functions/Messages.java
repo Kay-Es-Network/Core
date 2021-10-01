@@ -118,6 +118,43 @@ public class Messages {
 			cfg.set("fly.enabled", new String[] {"","%PREFIX% &fVolo abilitato",""});
 			cfg.set("fly.disabled", new String[] {"","%PREFIX% &fVolo disabilitato",""});
 			
+			//GOD
+			cfg.set("god.enabled", new String[] {"","%PREFIX% &fModalità immortale abilitata",""});
+			cfg.set("god.disabled", new String[] {"","%PREFIX% &fModalità immortale disabilitata",""});
+			
+			//HEAL
+			cfg.set("heal.set", new String[] {"","%PREFIX% &fLa barra della vita è stata ricaricata",""});
+			
+			//FEED
+			cfg.set("feed.set", new String[] {"","%PREFIX% &fLa barra della fame è stata ricaricata",""});
+			
+			//JUMP
+			cfg.set("jump.set", new String[] {"","%PREFIX% &fTeletrasportato",""});
+			cfg.set("jump.null", new String[] {"","%PREFIX% &fBuco nell'aria...",""});
+			
+			//TOP
+			cfg.set("top.set", new String[] {"","%PREFIX% &fTeletrasportato",""});
+			
+			//SUICIDE
+			cfg.set("suicide.set", new String[] {"","%PREFIX% &fTi sei suicidato...",""});
+			
+			//KILL
+			cfg.set("kill.set", new String[] {"","%PREFIX% &fHai ucciso &b%VICTIM%",""});
+			cfg.set("kill.take", new String[] {"","%PREFIX% &fSei morto...",""});
+			
+			//SEEN
+			cfg.set("seen.offline", new String[] {"","%PREFIX% &fIl giocatore non entra da &b%DAY%&7/&b%MONTH%&7/&b%YEAR% %HOUR%&7:&b%MINUTE%&7:&b%SECOND%",""});
+			cfg.set("seen.online", new String[] {"","%PREFIX% &fIl giocatore è attualmente online",""});
+			
+			//NEAR
+			cfg.set("near.send", new String[] {"","%PREFIX% &fVicino a te si trovano: %PLAYERS%",""});
+			cfg.set("near.format", new String[] {"&b%VICTIM%&8(%DISTANCE%)"});
+			cfg.set("near.separator", new String[] {"&7, "});
+			cfg.set("near.none", new String[] {"","%PREFIX% &fVicino a te non c'è nessuno",""});
+			
+			//BROACAST
+			cfg.set("broadcast.format", new String[] {"","&f&lANNUNCIO &b&l➤ &f%MESSAGE%",""});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -208,6 +245,42 @@ public class Messages {
 		getMessages().put("fly.enabled", (String[]) cfg.getStringList("fly.enabled").toArray(new String[cfg.getStringList("fly.enabled").size()]));
 		getMessages().put("fly.disabled", (String[]) cfg.getStringList("fly.disabled").toArray(new String[cfg.getStringList("fly.disabled").size()]));
 
+		//GOD
+		getMessages().put("god.enabled", (String[]) cfg.getStringList("god.enabled").toArray(new String[cfg.getStringList("god.enabled").size()]));
+		getMessages().put("god.disabled", (String[]) cfg.getStringList("god.disabled").toArray(new String[cfg.getStringList("god.disabled").size()]));
+
+		//FEED
+		getMessages().put("feed.set", (String[]) cfg.getStringList("feed.set").toArray(new String[cfg.getStringList("feed.set").size()]));
+		
+		//HEAL
+		getMessages().put("heal.set", (String[]) cfg.getStringList("heal.set").toArray(new String[cfg.getStringList("heal.set").size()]));
+		
+		//JUMP
+		getMessages().put("jump.set", (String[]) cfg.getStringList("jump.set").toArray(new String[cfg.getStringList("jump.set").size()]));
+		getMessages().put("jump.null", (String[]) cfg.getStringList("jump.null").toArray(new String[cfg.getStringList("jump.null").size()]));
+		
+		//TOP
+		getMessages().put("top.set", (String[]) cfg.getStringList("top.set").toArray(new String[cfg.getStringList("top.set").size()]));
+
+		//SUICIDE
+		getMessages().put("suicide.set", (String[]) cfg.getStringList("suicide.set").toArray(new String[cfg.getStringList("suicide.set").size()]));
+
+		//KILL
+		getMessages().put("kill.set", (String[]) cfg.getStringList("kill.set").toArray(new String[cfg.getStringList("kill.set").size()]));
+		getMessages().put("kill.take", (String[]) cfg.getStringList("kill.take").toArray(new String[cfg.getStringList("kill.take").size()]));
+		
+		//SEEN
+		getMessages().put("seen.offline", (String[]) cfg.getStringList("seen.offline").toArray(new String[cfg.getStringList("seen.offline").size()]));
+		getMessages().put("seen.online", (String[]) cfg.getStringList("seen.online").toArray(new String[cfg.getStringList("seen.online").size()]));
+		
+		//NEAR
+		getMessages().put("near.send", (String[]) cfg.getStringList("near.send").toArray(new String[cfg.getStringList("near.send").size()]));
+		getMessages().put("near.format", (String[]) cfg.getStringList("near.format").toArray(new String[cfg.getStringList("near.format").size()]));
+		getMessages().put("near.separator", (String[]) cfg.getStringList("near.separator").toArray(new String[cfg.getStringList("near.separator").size()]));
+		getMessages().put("near.none", (String[]) cfg.getStringList("near.none").toArray(new String[cfg.getStringList("near.none").size()]));
+
+		//BROADCAST
+		getMessages().put("broadcast.format", (String[]) cfg.getStringList("broadcast.format").toArray(new String[cfg.getStringList("broadcast.format").size()]));
 	}
 
 }
