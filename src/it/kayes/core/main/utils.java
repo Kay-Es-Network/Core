@@ -24,9 +24,11 @@ public class utils {
 	}
 	
 	public static int secureTp(Location loc) {
-		for (int i = loc.getBlockY(); i>0; i--)
-			if (new Location(loc.getWorld(), loc.getBlockX(), i, loc.getBlockZ()).getBlock().getType() != Material.AIR)
+		for (int i = loc.getBlockY(); i>0; i--) {
+			Material lc = new Location(loc.getWorld(), loc.getBlockX(), i, loc.getBlockZ()).getBlock().getType();
+			if (lc != Material.AIR && lc != Material.LAVA)
 				return i;
+		}
 		return -1;
 	}
 	

@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -20,7 +21,7 @@ import it.kayes.core.main.Main;
 import it.kayes.core.main.utils;
 import it.kayes.core.obj.User;
 
-public class GameCommands implements CommandExecutor {
+public class GameCommands implements CommandExecutor, TabCompleter {
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -80,6 +81,10 @@ public class GameCommands implements CommandExecutor {
 				Player p = (Player) sender;
 
 				p.setGameMode(mode);
+				
+				if (mode.equals(GameMode.CREATIVE))
+					p.setAllowFlight(true);
+				else p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -92,6 +97,10 @@ public class GameCommands implements CommandExecutor {
 					return utils.sendServerMsg(sender, "error.player-notonline");
 
 				p.setGameMode(mode);
+				
+				if (mode.equals(GameMode.CREATIVE))
+					p.setAllowFlight(true);
+				else p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -113,6 +122,8 @@ public class GameCommands implements CommandExecutor {
 				Player p = (Player) sender;
 
 				p.setGameMode(GameMode.CREATIVE);
+				
+				p.setAllowFlight(true);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -126,6 +137,8 @@ public class GameCommands implements CommandExecutor {
 					return utils.sendServerMsg(sender, "error.player-notonline");
 
 				p.setGameMode(GameMode.CREATIVE);
+				
+				p.setAllowFlight(true);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -147,6 +160,8 @@ public class GameCommands implements CommandExecutor {
 				Player p = (Player) sender;
 
 				p.setGameMode(GameMode.SURVIVAL);
+				
+				p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -160,6 +175,8 @@ public class GameCommands implements CommandExecutor {
 					return utils.sendServerMsg(sender, "error.player-notonline");
 
 				p.setGameMode(GameMode.SURVIVAL);
+				
+				p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -181,6 +198,8 @@ public class GameCommands implements CommandExecutor {
 				Player p = (Player) sender;
 
 				p.setGameMode(GameMode.ADVENTURE);
+				
+				p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -194,6 +213,8 @@ public class GameCommands implements CommandExecutor {
 					return utils.sendServerMsg(sender, "error.player-notonline");
 
 				p.setGameMode(GameMode.ADVENTURE);
+				
+				p.setAllowFlight(false);
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -278,6 +299,9 @@ public class GameCommands implements CommandExecutor {
 				u.set();
 				return true;
 			} else {
+				if (!sender.hasPermission("admin"))
+					return utils.sendServerMsg(sender, "error.nopermission");
+				
 				User u = Main.getUser(Bukkit.getOfflinePlayer(args[0]).getName());
 
 				if (u == null)
@@ -334,6 +358,9 @@ public class GameCommands implements CommandExecutor {
 				if (u.isFly()) return utils.sendServerMsg(sender, "fly.enabled");
 				else return utils.sendServerMsg(sender, "fly.disabled");
 			} else {
+				if (!sender.hasPermission("admin"))
+					return utils.sendServerMsg(sender, "error.nopermission");
+				
 				User u = Main.getUser(Bukkit.getOfflinePlayer(args[0]).getName());
 				
 				if (u==null) return utils.sendServerMsg(sender, "error.player-notexist");
@@ -373,6 +400,9 @@ public class GameCommands implements CommandExecutor {
 				if (u.isGod()) return utils.sendServerMsg(sender, "god.enabled");
 				else return utils.sendServerMsg(sender, "god.disabled");
 			} else {
+				if (!sender.hasPermission("admin"))
+					return utils.sendServerMsg(sender, "error.nopermission");
+				
 				User u = Main.getUser(Bukkit.getOfflinePlayer(args[0]).getName());
 				
 				if (u==null) return utils.sendServerMsg(sender, "error.player-notexist");
@@ -407,6 +437,9 @@ public class GameCommands implements CommandExecutor {
 				
 				p.setHealth(p.getMaxHealth());
 			} else {
+				if (!sender.hasPermission("admin"))
+					return utils.sendServerMsg(sender, "error.nopermission");
+				
 				Player p = Bukkit.getPlayerExact(args[0]);
 				
 				if (p==null) return utils.sendServerMsg(sender, "error.player-notonline");
@@ -430,6 +463,9 @@ public class GameCommands implements CommandExecutor {
 				
 				p.setFoodLevel(20);
 			} else {
+				if (!sender.hasPermission("admin"))
+					return utils.sendServerMsg(sender, "error.nopermission");
+				
 				Player p = Bukkit.getPlayerExact(args[0]);
 				
 				if (p==null) return utils.sendServerMsg(sender, "error.player-notonline");
@@ -450,6 +486,11 @@ public class GameCommands implements CommandExecutor {
 
 			Player p = (Player) sender;
 			
+			User u = Main.getUser(p.getName());
+			u.setLastLocation(p.getLocation());
+			u.setDeathLocation(p.getLocation());
+			u.set();
+			
 			p.setHealth(0);
 
 			utils.sendServerMsg(sender, "suicide.set");
@@ -467,6 +508,11 @@ public class GameCommands implements CommandExecutor {
 				
 			if (p==null) 
 				return utils.sendServerMsg(sender, "error.player-notonline");
+			
+			User u = Main.getUser(p.getName());
+			u.setLastLocation(p.getLocation());
+			u.setDeathLocation(p.getLocation());
+			u.set();
 			
 			p.setHealth(0);
 			
@@ -628,9 +674,129 @@ public class GameCommands implements CommandExecutor {
 					utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%MESSAGE%", message));
 			
 			return true;
+		} else if (cmd.getName().equalsIgnoreCase("back")) {
+			if (!sender.hasPermission("user") && !sender.hasPermission("back")
+					|| sender.hasPermission("back.limit") && !sender.hasPermission("*"))
+				return utils.sendServerMsg(sender, "error.nopermission");
+			
+			if (!(sender instanceof Player))
+				return utils.sendServerMsg(sender, "error.player-notconsole");
+			
+			Player p = (Player) sender;
+			User u = Main.getUser(p.getName());
+			Location loc = p.getLocation();
+			
+			if (args.length == 0) {
+				if (u.getLastLocation()==null)
+					return utils.sendServerMsg(sender, "back.no");
+				p.teleport(u.getLastLocation());
+			} else {
+				if (u.getDeathLocation()==null)
+					return utils.sendServerMsg(sender, "back.no");
+				p.teleport(u.getDeathLocation());
+			}
+			
+			u.setLastLocation(loc);
+			u.set();
+			
+			utils.sendServerMsg(sender, "back.send");
+			
+			return true;
+		} else if (cmd.getName().equalsIgnoreCase("workbench") || cmd.getName().equalsIgnoreCase("craft") || cmd.getName().equalsIgnoreCase("wb")) {
+			if (!sender.hasPermission("vip") && !sender.hasPermission("wb")
+					|| sender.hasPermission("wb.limit") && !sender.hasPermission("*"))
+				return utils.sendServerMsg(sender, "error.nopermission");
+			
+			if (!(sender instanceof Player))
+				return utils.sendServerMsg(sender, "error.player-notconsole");
+			
+			Player p = (Player) sender;
+			
+			p.openWorkbench(null, true);
+			
+			return true;
 		}
 
 		return true;
 	} 
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (cmd.getName().equalsIgnoreCase("gm") || cmd.getName().equalsIgnoreCase("gamemode")) {
+			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")) return null;
+				res.clear();
+				if (args.length == 1) {
+					res.add(GameMode.SURVIVAL.toString());
+					res.add(GameMode.CREATIVE.toString());
+					res.add(GameMode.ADVENTURE.toString());
+					res.add(GameMode.SPECTATOR.toString());
+				}else if (args.length==2) {
+					if (args[1].length()>0) {
+						for(Player p : Bukkit.getOnlinePlayers())
+							if (p.getName().toUpperCase().startsWith(args[1].toUpperCase()))
+								res.add(p.getName());
+					}else {
+						for(Player p : Bukkit.getOnlinePlayers())
+							res.add(p.getName());
+					}
+				}
+				return res;
+		}else if (cmd.getName().equalsIgnoreCase("gms") || cmd.getName().equalsIgnoreCase("gmc") 
+				|| cmd.getName().equalsIgnoreCase("gma") || cmd.getName().equalsIgnoreCase("gmsp")) {
+			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")) return null;
+			res.clear();
+			if (args.length==1) {
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+			}
+			return res;
+		}else if (cmd.getName().equalsIgnoreCase("speed")) {
+			if (!sender.hasPermission("admin") && !sender.hasPermission("speed")) return null;
+			res.clear();
+			if (args.length==1) {
+				for (int i = 0; i<=10; i++)
+					res.add(i+"");
+			}else if (args.length==2) {
+				if (args[1].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[1].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+			}
+			return res;
+		}else if (cmd.getName().equalsIgnoreCase("fly") || cmd.getName().equalsIgnoreCase("god") || cmd.getName().equalsIgnoreCase("feed")
+				|| cmd.getName().equalsIgnoreCase("heal") || cmd.getName().equalsIgnoreCase("kill")) {
+			if (!sender.hasPermission("admin")) return null;
+			res.clear();
+			if (args.length==1) {
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+			}
+			return res;
+		}else if (cmd.getName().equalsIgnoreCase("back")) {
+			if (!sender.hasPermission("user") && !sender.hasPermission("back")) return null;
+			res.clear();
+			if (args.length==1)
+				res.add("death");
+			return res;
+		}
+		return null;
+	}
 
 }

@@ -1,9 +1,13 @@
 package it.kayes.core.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
@@ -14,13 +18,13 @@ import it.kayes.core.main.Main;
 import it.kayes.core.main.utils;
 import it.kayes.core.obj.User;
 
-public class InventoryCommands implements CommandExecutor {
+public class InventoryCommands implements CommandExecutor, TabCompleter {
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-		if (cmd.getName().equalsIgnoreCase("repair")) {
+		if (cmd.getName().equalsIgnoreCase("repair") || cmd.getName().equalsIgnoreCase("fix")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -47,7 +51,7 @@ public class InventoryCommands implements CommandExecutor {
 				utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("repairall")) {
+		} else if (cmd.getName().equalsIgnoreCase("repairall") || cmd.getName().equalsIgnoreCase("fixall")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -178,4 +182,26 @@ public class InventoryCommands implements CommandExecutor {
 		return true;
 	}
 
+	@Override
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (cmd.getName().equalsIgnoreCase("invsee") || cmd.getName().equalsIgnoreCase("clear")
+				|| cmd.getName().equalsIgnoreCase("enderchest") || cmd.getName().equalsIgnoreCase("ec")) {
+			if (!sender.hasPermission("admin")) return null;
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			}
+		}
+		return null;
+	}
+	
 }

@@ -1,5 +1,8 @@
 package it.kayes.core.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -8,18 +11,21 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import it.kayes.core.functions.Animation;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.functions.Teleport;
+import it.kayes.core.main.Main;
 import it.kayes.core.main.utils;
 import it.kayes.core.obj.TP;
+import it.kayes.core.obj.User;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class TeleportCommands implements CommandExecutor {
+public class TeleportCommands implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -170,9 +176,15 @@ public class TeleportCommands implements CommandExecutor {
 			Teleport.cancelRequest(v.getName());
 
 			if (tp.isTphere()) {
+				User u = Main.getUser(v.getName());
+				u.setLastLocation(v.getLocation());
+				u.set();
 				v.teleport(p);
 				Animation.createTeleportAnimation(v.getLocation());
 			} else {
+				User u = Main.getUser(p.getName());
+				u.setLastLocation(p.getLocation());
+				u.set();
 				p.teleport(v);
 				Animation.createTeleportAnimation(p.getLocation());
 			}
@@ -280,6 +292,10 @@ public class TeleportCommands implements CommandExecutor {
 
 			if (v == null)
 				return utils.sendServerMsg(sender, "error.player-notonline");
+			
+			User u = Main.getUser(p.getName());
+			u.setLastLocation(p.getLocation());
+			u.set();
 
 			p.teleport(v);
 
@@ -308,6 +324,10 @@ public class TeleportCommands implements CommandExecutor {
 			if (v == null)
 				return utils.sendServerMsg(sender, "error.player-notonline");
 
+			User u = Main.getUser(v.getName());
+			u.setLastLocation(v.getLocation());
+			u.set();
+			
 			v.teleport(p);
 
 			msg = Messages.getMessage("teleport.tphere");
@@ -328,8 +348,12 @@ public class TeleportCommands implements CommandExecutor {
 			String[] msg;
 
 			for (Player v : Bukkit.getOnlinePlayers())
-				if (!v.getName().equalsIgnoreCase(p.getName()))
+				if (!v.getName().equalsIgnoreCase(p.getName())) {
+					User u = Main.getUser(v.getName());
+					u.setLastLocation(v.getLocation());
+					u.set();
 					v.teleport(p);
+				}
 
 			msg = Messages.getMessage("teleport.tpall");
 			for (String s : msg)
@@ -424,6 +448,41 @@ public class TeleportCommands implements CommandExecutor {
 
 			} else
 				utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()));
+	}
+	
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (cmd.getName().equalsIgnoreCase("tpa") || cmd.getName().equalsIgnoreCase("tpahere")) {
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			}
+		} else if (cmd.getName().equalsIgnoreCase("tp") || cmd.getName().equalsIgnoreCase("tphere")) {
+			if (!sender.hasPermission("admin")) return null;
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			}
+		}
+		return null;
 	}
 
 }

@@ -2,6 +2,7 @@ package it.kayes.core.obj;
 
 import java.util.HashMap;
 
+import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
 
 import it.kayes.core.main.Main;
@@ -22,6 +23,35 @@ public class User {
 
 	boolean fly;
 	boolean god;
+	
+	Location lastLocation;
+	Location deathLocation;
+
+	public Location getDeathLocation() {
+		return deathLocation;
+	}
+
+	public void setDeathLocation(Location deathLocation) {
+		this.deathLocation = deathLocation;
+	}
+
+	public Location getLastLocation() {
+		return lastLocation;
+	}
+
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
+	}
+
+	double money;
+	
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
 
 	public boolean isGod() {
 		return god;

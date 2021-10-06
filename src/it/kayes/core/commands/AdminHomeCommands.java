@@ -1,11 +1,15 @@
 package it.kayes.core.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import it.kayes.core.functions.HomeFunctions;
@@ -18,7 +22,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class AdminHomeCommands implements CommandExecutor {
+public class AdminHomeCommands implements CommandExecutor, TabCompleter {
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -276,6 +280,90 @@ public class AdminHomeCommands implements CommandExecutor {
 				utils.sendMsg(p, s);
 		}
 
+	}
+	
+	@SuppressWarnings("deprecation")
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (!sender.hasPermission("admin")) return null;
+		if (cmd.getName().equalsIgnoreCase("adminhomes") || cmd.getName().equalsIgnoreCase("ahomes")) {
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			}
+		} else if (cmd.getName().equalsIgnoreCase("adminhome") || cmd.getName().equalsIgnoreCase("ahome")) {
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			} else if (args.length == 2) {
+				res.clear();
+				OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+				if (p==null) return null;
+				Home[] h = Main.getUser(p.getName()).getHomes();
+				for (Home t : h)
+					res.add(t.getName());
+				return res;
+			}
+		} else if (cmd.getName().equalsIgnoreCase("adminsethome") || cmd.getName().equalsIgnoreCase("asethome")) {
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			} else if (args.length == 2) {
+				res.clear();
+				OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+				if (p==null) return null;
+				Home[] h = Main.getUser(p.getName()).getHomes();
+				for (Home t : h)
+					res.add(t.getName());
+				return res;
+			}
+		} else if (cmd.getName().equalsIgnoreCase("admindelhome") || cmd.getName().equalsIgnoreCase("adelhome")) {
+			if (args.length == 1) {
+				res.clear();
+				if (args[0].length()>0) {
+					for(Player p : Bukkit.getOnlinePlayers())
+						if (p.getName().toUpperCase().startsWith(args[0].toUpperCase()))
+							res.add(p.getName());
+				}else {
+					for(Player p : Bukkit.getOnlinePlayers())
+						res.add(p.getName());
+				}
+				return res;
+			} else if (args.length == 2) {
+				res.clear();
+				OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+				if (p==null) return null;
+				Home[] h = Main.getUser(p.getName()).getHomes();
+				for (Home t : h)
+					res.add(t.getName());
+				return res;
+			}
+		}
+		return null;
 	}
 
 }

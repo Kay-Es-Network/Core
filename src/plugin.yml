@@ -73,9 +73,11 @@ commands:
         description: Rimuovi uno warp
         default: OP
     repair:
+        aliases: [fix]
         description: Ripara un oggetto
         default: true
     repairall:
+        aliases: [fixall]
         description: Ripara tutti gli oggetti nel tuo inventario
         default: true
     invsee:
@@ -147,5 +149,26 @@ commands:
         description: Controlla chi e' vicino a te
         default: true
     broadcast:
+        aliases: [bc]
         description: Invia un avviso a tutti
         default: OP
+    money:
+        aliases: [bal]
+        description: Controlla il bilancio
+        default: true
+    eco:
+        description: Imposta l'economia del server
+        default: OP
+    pay:
+        description: Invia denaro ad un giocatore
+        default: true
+    baltop:
+        description: Visualizza la classifica dei giocatori
+        default: true
+    back:
+        description: Torna alla posizione precedente
+        default: true
+    workbench:
+        aliases: [wb,craft]
+        description: Apri la crafting table
+        default: false

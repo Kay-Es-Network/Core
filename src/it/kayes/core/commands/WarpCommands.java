@@ -1,22 +1,27 @@
 package it.kayes.core.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import it.kayes.core.functions.Animation;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.listeners.WarpsLoader;
+import it.kayes.core.main.Main;
 import it.kayes.core.main.utils;
+import it.kayes.core.obj.User;
 import it.kayes.core.obj.Warp;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
+import net.md_5.bungee.api.chat.TextComponent;
 
-public class WarpCommands implements CommandExecutor {
+public class WarpCommands implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -65,9 +70,13 @@ public class WarpCommands implements CommandExecutor {
 				for (String s : msg)
 					utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%WARP%", warp));
 
+				User u = Main.getUser(p.getName());
+				u.setLastLocation(p.getLocation());
+				u.set();
+				
 				p.teleport(WarpsLoader.getWarp(warp).getLoc());
 
-				Animation.createTeleportAnimation(p.getLocation());
+				//Animation.createTeleportAnimation(p.getLocation());
 
 				return true;
 			} else if (args.length > 1) {
@@ -92,9 +101,13 @@ public class WarpCommands implements CommandExecutor {
 				for (String s : msg)
 					utils.sendMsg(v, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%WARP%", warp));
 
+				User u = Main.getUser(v.getName());
+				u.setLastLocation(v.getLocation());
+				u.set();
+				
 				v.teleport(WarpsLoader.getWarp(warp).getLoc());
 
-				Animation.createTeleportAnimation(v.getLocation());
+				//Animation.createTeleportAnimation(v.getLocation());
 
 				return true;
 			}
@@ -225,6 +238,19 @@ public class WarpCommands implements CommandExecutor {
 				utils.sendMsg(p, s);
 		}
 
+	}
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (cmd.getName().equalsIgnoreCase("warp") || cmd.getName().equalsIgnoreCase("delwarp")) {
+			res.clear();
+			Warp[] warps = WarpsLoader.getWarps().values().toArray(new Warp[WarpsLoader.getWarps().size()]);
+			for (Warp w : warps)
+				res.add(w.getName());
+			return res;
+		}
+		return null;
 	}
 
 }

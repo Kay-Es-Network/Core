@@ -1,9 +1,13 @@
 package it.kayes.core.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import it.kayes.core.functions.Animation;
@@ -17,7 +21,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class HomeCommands implements CommandExecutor {
+public class HomeCommands implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -66,6 +70,9 @@ public class HomeCommands implements CommandExecutor {
 
 			Home h;
 
+			u.setLastLocation(p.getLocation());
+			u.set();
+			
 			if (args.length == 0) {
 				h = homes[0];
 				p.teleport(h.getLoc());
@@ -243,6 +250,21 @@ public class HomeCommands implements CommandExecutor {
 				utils.sendMsg(p, s);
 		}
 
+	}
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender,  Command cmd,  String label, String[] args) {
+		ArrayList<String> res = new ArrayList<String>();
+		if (cmd.getName().equalsIgnoreCase("home") || cmd.getName().equalsIgnoreCase("delhome")) {
+			if (!sender.hasPermission("user") || !(sender instanceof Player)) return null;
+			if (args.length == 1) {
+				Home[] h = Main.getUser(sender.getName()).getHomes();
+				for (Home x : h)
+					res.add(x.getName());
+				return res;
+			}
+		}	
+		return null;
 	}
 
 }

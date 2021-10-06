@@ -155,6 +155,25 @@ public class Messages {
 			//BROACAST
 			cfg.set("broadcast.format", new String[] {"","&f&lANNUNCIO &b&l➤ &f%MESSAGE%",""});
 			
+			//MONEY
+			cfg.set("money.balance", new String[] {"","%PREFIX% &fPossiedi &b%MONEY%$",""});
+			cfg.set("money.balanceother", new String[] {"","%PREFIX% &b%VICTIM% &fpossiede &b%MONEY%$",""});
+			cfg.set("money.pay", new String[] {"","%PREFIX% &fHai inviato &b%MONEY%$ &fa &b%VICTIM%",""});
+			cfg.set("money.take", new String[] {"","%PREFIX% &fHai ricevuto &b%MONEY%$ &fda &b%SENDER%",""});
+			cfg.set("money.give", new String[] {"","%PREFIX% &fHai inviato &b%MONEY%$ &fa &b%VICTIM%",""});
+			cfg.set("money.set", new String[] {"","%PREFIX% &fHai impostato il bilancio di &b%VICTIM% &fa &b%MONEY%$",""});
+			cfg.set("money.remove", new String[] {"","%PREFIX% &fHai rimosso &b%MONEY%$ &fa &b%VICTIM%",""});
+			cfg.set("money.reset", new String[] {"","%PREFIX% &fHai resettato il bilancio di &b%VICTIM% &fa &b%MONEY%$",""});
+			cfg.set("money.baltoporder", new String[] {"","%PREFIX% &fHai riordinato la baltop",""});
+			cfg.set("money.nonumber", new String[] {"","%PREFIX% &fInserisci una quantità valida di denaro",""});
+			cfg.set("money.nomoney", new String[] {"","%PREFIX% &fNon possiedi abbastanza denaro",""});
+			cfg.set("money.baltopformat", new String[] {"&8[&b%POSITION%&8] &f%PLAYER% &7▸ &f%MONEY%$"});
+			cfg.set("money.baltop", new String[] {"","&7---------------------------","%BALTOP_VALUES%","&7---------------------------","&fPagina &b%BALTOP_PAGE%",""});
+			
+			//BACK
+			cfg.set("back.send", new String[] {"","%PREFIX% &fSei tornato alla posizione precedente",""});
+			cfg.set("back.no", new String[] {"","%PREFIX% &fNessuna posizione precedente salvata",""});
+			
 			try {cfg.save(f);} catch (IOException e) {e.printStackTrace();}
 		}
 		
@@ -281,6 +300,27 @@ public class Messages {
 
 		//BROADCAST
 		getMessages().put("broadcast.format", (String[]) cfg.getStringList("broadcast.format").toArray(new String[cfg.getStringList("broadcast.format").size()]));
+
+		//MONEY
+		getMessages().put("money.balance", (String[]) cfg.getStringList("money.balance").toArray(new String[cfg.getStringList("money.balance").size()]));
+		getMessages().put("money.balanceother", (String[]) cfg.getStringList("money.balanceother").toArray(new String[cfg.getStringList("money.balanceother").size()]));
+		getMessages().put("money.pay", (String[]) cfg.getStringList("money.pay").toArray(new String[cfg.getStringList("money.pay").size()]));
+		getMessages().put("money.take", (String[]) cfg.getStringList("money.take").toArray(new String[cfg.getStringList("money.take").size()]));
+		getMessages().put("money.give", (String[]) cfg.getStringList("money.give").toArray(new String[cfg.getStringList("money.give").size()]));
+		getMessages().put("money.set", (String[]) cfg.getStringList("money.set").toArray(new String[cfg.getStringList("money.set").size()]));
+		getMessages().put("money.remove", (String[]) cfg.getStringList("money.remove").toArray(new String[cfg.getStringList("money.remove").size()]));
+		getMessages().put("money.reset", (String[]) cfg.getStringList("money.reset").toArray(new String[cfg.getStringList("money.reset").size()]));
+		getMessages().put("money.baltop", (String[]) cfg.getStringList("money.baltop").toArray(new String[cfg.getStringList("money.baltop").size()]));
+		getMessages().put("money.baltopformat", (String[]) cfg.getStringList("money.baltopformat").toArray(new String[cfg.getStringList("money.baltopformat").size()]));
+		getMessages().put("money.baltoporder", (String[]) cfg.getStringList("money.baltoporder").toArray(new String[cfg.getStringList("money.baltoporder").size()]));
+		getMessages().put("money.nonumber", (String[]) cfg.getStringList("money.nonumber").toArray(new String[cfg.getStringList("money.nonumber").size()]));
+		getMessages().put("money.nomoney", (String[]) cfg.getStringList("money.nomoney").toArray(new String[cfg.getStringList("money.nomoney").size()]));
+
+		//BACK
+		getMessages().put("back.send", (String[]) cfg.getStringList("back.send").toArray(new String[cfg.getStringList("back.send").size()]));
+		getMessages().put("back.no", (String[]) cfg.getStringList("back.no").toArray(new String[cfg.getStringList("back.no").size()]));
+
+		
 	}
 
 }

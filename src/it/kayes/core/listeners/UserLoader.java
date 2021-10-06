@@ -81,7 +81,25 @@ public class UserLoader implements Listener {
 				u.setGod(cfg.getBoolean("users."+user+".god"));
 			else u.setGod(false);
 			
+			if (cfg.getString("users."+user+".lastloc")!=null) {
+				String[] arg = cfg.getString("users."+user+".lastloc").split(";");
+				Location loc = new Location(Bukkit.getWorld(arg[0]),Double.parseDouble(arg[1]),Double.parseDouble(arg[2]),Double.parseDouble(arg[3]));
+				loc.setPitch(Float.parseFloat(arg[4]));
+				loc.setYaw(Float.parseFloat(arg[5]));
+				u.setLastLocation(loc);
+			}
+			
+			if (cfg.getString("users."+user+".deathloc")!=null) {
+				String[] arg = cfg.getString("users."+user+".deathloc").split(";");
+				Location loc = new Location(Bukkit.getWorld(arg[0]),Double.parseDouble(arg[1]),Double.parseDouble(arg[2]),Double.parseDouble(arg[3]));
+				loc.setPitch(Float.parseFloat(arg[4]));
+				loc.setYaw(Float.parseFloat(arg[5]));
+				u.setDeathLocation(loc);
+			}
+			
 			u.setHomes(homes);
+			
+			u.setMoney(cfg.getDouble("users."+user+".money"));
 			
 			u.setInv(inv);
 			u.setEnderchest(end);
@@ -131,6 +149,14 @@ public class UserLoader implements Listener {
 				cfg.set("users."+u.getName()+".speed", u.getSpeed());
 				cfg.set("users."+u.getName()+".fly", u.isFly());
 				cfg.set("users."+u.getName()+".god", u.isGod());
+				if (u.getLastLocation()!=null)
+					cfg.set("users."+u.getName()+".lastloc", u.getLastLocation().getWorld().getName()+";"+u.getLastLocation().getX()+";"
+							+u.getLastLocation().getY()+";"+u.getLastLocation().getZ()+";"+u.getLastLocation().getPitch()+";"+u.getLastLocation().getYaw());
+				if (u.getDeathLocation()!=null)
+					cfg.set("users."+u.getName()+".deathloc", u.getDeathLocation().getWorld().getName()+";"+u.getDeathLocation().getX()+";"
+						+u.getDeathLocation().getY()+";"+u.getDeathLocation().getZ()+";"+u.getDeathLocation().getPitch()+";"+u.getDeathLocation().getYaw());
+				cfg.set("users."+u.getName()+".money", u.getMoney());
+				
 			} catch (NullPointerException exc) {
 				exc.printStackTrace();
 			}
@@ -156,6 +182,7 @@ public class UserLoader implements Listener {
 			u.setSpeed(1);
 			u.setFly(false);
 			u.setGod(false);
+			u.setMoney(0);
 			
 			u.set();
 		}
