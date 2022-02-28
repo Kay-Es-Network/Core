@@ -106,23 +106,21 @@ public class UserLoader implements Listener {
 			
 			u.set();
 		}
+
+		
+
 	}
 	
 	public static void save() throws SQLException {
 		File f = new File("plugins/KayEs-Core" + File.separator + "users.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 		
-		ArrayList<String> homes = new ArrayList<String>();
-		
 		if (f.exists()) f.delete();
-		
-		//Main.getSQL().executeUpdate("TRUNCATE "+Main.usertable);
+
 		for (User u : Main.getUsers().values()) {
 			try {
-				/*Main.getSQL().executeUpdate("INSERT INTO "+Main.usertable + " (UUID,NICKNAME)"
-						+ "VALUES ('"+u.getUuid()+"','"+u.getName()+"')");*/
-				
-				homes.clear();
+
+				ArrayList<String> homes = new ArrayList<>();
 				if (u.getHomes()!=null)
 					for (Home h : u.getHomes())
 						homes.add(h.getLoc().getWorld().getName()+";"+h.getLoc().getX()+";"+h.getLoc().getY()+";"+h.getLoc().getZ()
@@ -161,7 +159,7 @@ public class UserLoader implements Listener {
 				exc.printStackTrace();
 			}
 		}
-		
+
 		try {
 			cfg.save(f);
 		} catch (IOException e) {}
@@ -207,7 +205,7 @@ public class UserLoader implements Listener {
 			u.setUuid(p.getUniqueId().toString());
 		}
 		
-		u.setSpeed(p.getWalkSpeed());
+		u.setSpeed(u.getSpeed());
 		u.setInv(p.getInventory());
 		u.setEnderchest(p.getEnderChest());
 		u.setFly(p.getAllowFlight());

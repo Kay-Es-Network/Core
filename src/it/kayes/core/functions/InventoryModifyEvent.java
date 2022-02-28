@@ -13,8 +13,8 @@ import it.kayes.core.obj.User;
 
 public class InventoryModifyEvent implements Listener {
 
-	private static HashMap<String, String> invsee = new HashMap<String, String>();
-	private static HashMap<String, String> enderchest = new HashMap<String, String>();
+	private static final HashMap<String, String> invsee = new HashMap<String, String>();
+	private static final HashMap<String, String> enderchest = new HashMap<String, String>();
 	
 	public static HashMap<String, String> getInvsee() {
 		return invsee;

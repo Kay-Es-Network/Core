@@ -1,19 +1,5 @@
 package it.kayes.core.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
-
 import it.kayes.core.functions.Animation;
 import it.kayes.core.functions.Messages;
 import it.kayes.core.functions.Teleport;
@@ -24,6 +10,15 @@ import it.kayes.core.obj.User;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeleportCommands implements CommandExecutor, TabCompleter {
 
@@ -85,7 +80,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 			sendRequest(v, p, "teleport.request");
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tpahere")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tpahere")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -141,11 +137,12 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 			sendRequest(v, p, "teleport.requesthere");
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tpaccept") || cmd.getName().equalsIgnoreCase("tpyes")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tpaccept") || cmd.getName().equalsIgnoreCase("tpyes")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
-			Player p = (Player) sender;
+			Player p = (Player) sender; //Vittima
 
 			if (!p.hasPermission("user") || p.hasPermission("tpaccept.limit") && !p.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -161,7 +158,7 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			Player v = Bukkit.getPlayerExact(Teleport.getRequester(tp));
+			Player v = Bukkit.getPlayerExact(Teleport.getRequester(tp)); //Richiede
 
 			if (v == null)
 				return utils.sendServerMsg(sender, "error.player-notonline");
@@ -173,21 +170,21 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			Teleport.cancelRequest(v.getName());
-
 			if (tp.isTphere()) {
-				User u = Main.getUser(v.getName());
-				u.setLastLocation(v.getLocation());
-				u.set();
-				v.teleport(p);
-				Animation.createTeleportAnimation(v.getLocation());
-			} else {
 				User u = Main.getUser(p.getName());
 				u.setLastLocation(p.getLocation());
 				u.set();
 				p.teleport(v);
 				Animation.createTeleportAnimation(p.getLocation());
+			} else {
+				User u = Main.getUser(v.getName());
+				u.setLastLocation(v.getLocation());
+				u.set();
+				v.teleport(p);
+				Animation.createTeleportAnimation(p.getLocation());
 			}
+
+			Teleport.cancelRequest(v.getName());
 
 			msg = Messages.getMessage("teleport.requestaccept-send");
 			for (String s : msg)
@@ -200,7 +197,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 						.replaceAll("%SENDER%", v.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tpdeny") || cmd.getName().equalsIgnoreCase("tpno")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tpdeny") || cmd.getName().equalsIgnoreCase("tpno")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -237,7 +235,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 						.replaceAll("%SENDER%", v.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tpcancel")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tpcancel") || cmd.getName().equalsIgnoreCase("tpacancel")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -274,7 +273,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 						.replaceAll("%SENDER%", v.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tp")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tp")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -305,7 +305,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 						.replaceAll("%SENDER%", p.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tphere")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tphere")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -336,7 +337,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 						.replaceAll("%SENDER%", p.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("tpall")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("tpall")) {
 			if (!(sender instanceof Player))
 				return utils.sendServerMsg(sender, "error.player-notconsole");
 
@@ -360,7 +362,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 				utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%SENDER%", p.getName()));
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("jump")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("jump")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("jump")
 					|| sender.hasPermission("jump.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -389,7 +392,8 @@ public class TeleportCommands implements CommandExecutor, TabCompleter {
 			}
 			
 			return utils.sendServerMsg(sender, "jump.null");
-		} else if (cmd.getName().equalsIgnoreCase("top")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("top")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("top")
 					|| sender.hasPermission("top.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");

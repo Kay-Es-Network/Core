@@ -81,10 +81,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 				Player p = (Player) sender;
 
 				p.setGameMode(mode);
-				
-				if (mode.equals(GameMode.CREATIVE))
-					p.setAllowFlight(true);
-				else p.setAllowFlight(false);
+
+				p.setAllowFlight(mode.equals(GameMode.CREATIVE));
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -97,10 +95,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 					return utils.sendServerMsg(sender, "error.player-notonline");
 
 				p.setGameMode(mode);
-				
-				if (mode.equals(GameMode.CREATIVE))
-					p.setAllowFlight(true);
-				else p.setAllowFlight(false);
+
+				p.setAllowFlight(mode.equals(GameMode.CREATIVE));
 
 				msg = Messages.getMessage("gamemode.change");
 				for (String s : msg)
@@ -108,7 +104,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			}
 			return true;
 
-		} else if (cmd.getName().equalsIgnoreCase("gmc")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("gmc")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")
 					|| sender.hasPermission("gamemode.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -146,7 +143,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 							Messages.getMessage("general.creative")[0]));
 				return true;
 			}
-		} else if (cmd.getName().equalsIgnoreCase("gms")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("gms")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")
 					|| sender.hasPermission("gamemode.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -184,7 +182,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 							Messages.getMessage("general.survival")[0]));
 				return true;
 			}
-		} else if (cmd.getName().equalsIgnoreCase("gma")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("gma")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")
 					|| sender.hasPermission("gamemode.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -222,7 +221,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 							Messages.getMessage("general.adventure")[0]));
 				return true;
 			}
-		} else if (cmd.getName().equalsIgnoreCase("gmsp")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("gmsp")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("gamemode")
 					|| sender.hasPermission("gamemode.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -256,7 +256,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 							Messages.getMessage("general.spector")[0]));
 				return true;
 			}
-		} else if (cmd.getName().equalsIgnoreCase("speed")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("speed")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("speed")
 					|| sender.hasPermission("speed.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -340,7 +341,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 
 				return true;
 			}
-		} else if (cmd.getName().equalsIgnoreCase("fly")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("fly")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("fly")
 					|| sender.hasPermission("fly.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -382,7 +384,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 			
-		} else if (cmd.getName().equalsIgnoreCase("god")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("god")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("god")
 					|| sender.hasPermission("god.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -424,7 +427,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 			
-		} else if (cmd.getName().equalsIgnoreCase("heal")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("heal")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("heal")
 					|| sender.hasPermission("heal.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -450,7 +454,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			utils.sendServerMsg(sender, "heal.set");
 			
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("feed")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("feed")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("feed")
 					|| sender.hasPermission("feed.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -476,7 +481,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			utils.sendServerMsg(sender, "feed.set");
 			
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("suicide")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("suicide")) {
 			if (!sender.hasPermission("user") && !sender.hasPermission("suicide")
 					|| sender.hasPermission("suicide.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -496,7 +502,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			utils.sendServerMsg(sender, "suicide.set");
 			
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("kill")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("kill")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("kill")
 					|| sender.hasPermission("kill.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -521,22 +528,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 				utils.sendMsg(sender, s.replaceAll("%VICTIM%", p.getName()));
 			
 			return utils.sendServerMsg(p, "kill.take");
-		} else if (cmd.getName().equalsIgnoreCase("disposal")) {
-			if (!sender.hasPermission("user") && !sender.hasPermission("disposal")
-					|| sender.hasPermission("disposal.limit") && !sender.hasPermission("*"))
-				return utils.sendServerMsg(sender, "error.nopermission");
-			
-			if (!(sender instanceof Player))
-				return utils.sendServerMsg(sender, "error.player-notconsole");
-
-			Player p = (Player) sender;
-			
-			Inventory inv = Bukkit.createInventory(null, 27);
-			
-			p.openInventory(inv);
-
-			return true;
-		} else if (cmd.getName().equalsIgnoreCase("hat")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("hat")) {
 			if (!sender.hasPermission("user") && !sender.hasPermission("hat")
 					|| sender.hasPermission("hat.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -556,7 +549,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			p.getInventory().setItemInHand(null);
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("seen")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("seen")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("seen")
 					|| sender.hasPermission("seen.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -584,7 +578,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			}
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("skull")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("skull")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("skull")
 					|| sender.hasPermission("skull.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -613,7 +608,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			p.updateInventory();*/
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("near")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("near")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("near")
 					|| sender.hasPermission("near.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -656,7 +652,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			}
 
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("broadcast")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("broadcast")) {
 			if (!sender.hasPermission("admin") && !sender.hasPermission("broadcast")
 					|| sender.hasPermission("broadcast.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -674,7 +671,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 					utils.sendMsg(p, s.replaceAll("%PREFIX%", Messages.getPrefix()).replaceAll("%MESSAGE%", message));
 			
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("back")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("back")) {
 			if (!sender.hasPermission("user") && !sender.hasPermission("back")
 					|| sender.hasPermission("back.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");
@@ -702,7 +700,8 @@ public class GameCommands implements CommandExecutor, TabCompleter {
 			utils.sendServerMsg(sender, "back.send");
 			
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("workbench") || cmd.getName().equalsIgnoreCase("craft") || cmd.getName().equalsIgnoreCase("wb")) {
+		}
+		else if (cmd.getName().equalsIgnoreCase("workbench") || cmd.getName().equalsIgnoreCase("craft") || cmd.getName().equalsIgnoreCase("wb")) {
 			if (!sender.hasPermission("vip") && !sender.hasPermission("wb")
 					|| sender.hasPermission("wb.limit") && !sender.hasPermission("*"))
 				return utils.sendServerMsg(sender, "error.nopermission");

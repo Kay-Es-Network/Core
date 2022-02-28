@@ -1,6 +1,6 @@
 name: KayEs-Core
 author: KayEs
-version: 1.0
+version: 1.1
 description: Core Kay-Es
 api-version: 1.13
 main: it.kayes.core.main.Main
@@ -134,6 +134,7 @@ commands:
         description: Suicidati
         default: true
     disposal:
+        aliases: [ trash,bin,cestino ]
         description: Apri il cestino
         default: true
     skull:
@@ -169,6 +170,21 @@ commands:
         description: Torna alla posizione precedente
         default: true
     workbench:
-        aliases: [wb,craft]
+        aliases: [ wb,craft ]
         description: Apri la crafting table
+        default: false
+    anvil:
+        description: Apri il menu dell' incudine
+        default: false
+    smithingtable:
+        aliases: [ smtable ]
+        description: Apri il menu del tavolo del fabbro
+        default: false
+    grindstone:
+        aliases: [ gstone ]
+        description: Apri il menu della mola
+        default: false
+    enchantingtable:
+        aliases: [ enchanttable ]
+        description: Apri il menu del tavolo degli incantesimi
         default: false

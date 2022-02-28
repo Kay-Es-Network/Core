@@ -13,7 +13,7 @@ import it.kayes.core.obj.Warp;
 
 public class WarpsLoader {
 
-	private static HashMap<String, Warp> warps = new HashMap<String, Warp>();
+	private static final HashMap<String, Warp> warps = new HashMap<String, Warp>();
 	
 	public static HashMap<String, Warp> getWarps() {
 		return warps;

@@ -58,16 +58,16 @@ public class utils {
         }
         return lastBlock;
     }
-	
-	@SuppressWarnings("deprecation")
+
 	public static ItemStack getPlayerhead(String p) {
-		Material m = null;
+		Material m;
 		if (isMC113OrNewer())
 			m = Material.valueOf("LEGACY_SKULL_ITEM");
-		else m = Material.SKULL_ITEM;
+		else m = Material.PLAYER_HEAD;
 		
 		ItemStack item = new ItemStack(m, 1, (short) 3);
 		SkullMeta skull = (SkullMeta) item.getItemMeta();
+		assert skull != null;
 		skull.setOwner(p);
 		item.setItemMeta(skull);
 		
@@ -107,9 +107,7 @@ public class utils {
 	}
 
 	public static boolean isMC113OrNewer(){
-	    if (isMC113() || isMC114() || isMC115() || isMC116() || isMC117() || isMC118() || isMC119() || isMC120()) 
-	    	return true;
-	    return false;
+		return isMC113() || isMC114() || isMC115() || isMC116() || isMC117() || isMC118() || isMC119() || isMC120();
 	}
 	
 }

@@ -13,9 +13,9 @@ import it.kayes.core.obj.User;
 
 public class MoneyFunctions {
 
-	private static Statement sql = Main.getSQL();
-	private static HashMap<Integer, Conto> baltop = new HashMap<Integer, Conto>();
-	private static HashMap<String, Integer> baltopnames = new HashMap<String, Integer>();
+	private static final Statement sql = Main.getSQL();
+	private static final HashMap<Integer, Conto> baltop = new HashMap<Integer, Conto>();
+	private static final HashMap<String, Integer> baltopnames = new HashMap<String, Integer>();
 
 	public static int getBaltopPosition(String name) {
 		if (baltopnames.containsKey(name))

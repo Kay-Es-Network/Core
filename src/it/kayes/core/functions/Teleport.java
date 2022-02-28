@@ -6,7 +6,7 @@ import it.kayes.core.obj.TP;
 
 public class Teleport {
 	
-	private static HashMap<String, TP> teleports = new HashMap<String, TP>(); 
+	private static final HashMap<String, TP> teleports = new HashMap<String, TP>();
 	
 	public static HashMap<String, TP> getTeleports() {
 		return teleports;

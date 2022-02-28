@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,7 +39,7 @@ public class Main extends JavaPlugin {
 	private static Economy econ;
 	private static Main instance;
 	public static String usertable;
-	private static HashMap<String, User> users = new HashMap<String, User>();
+	private static final HashMap<String, User> users = new HashMap<>();
 
 	@Override
 	public void onEnable() {
@@ -48,105 +49,104 @@ public class Main extends JavaPlugin {
 		
 		setupEconomy();
 
-		try {
-			tryConnection();
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			e.printStackTrace();
-		}
-
 		// COMMANDS
-		this.getCommand("tpa").setExecutor(new TeleportCommands());
-		this.getCommand("tpa").setTabCompleter(new TeleportCommands());
-		this.getCommand("tpahere").setExecutor(new TeleportCommands());
-		this.getCommand("tpahere").setTabCompleter(new TeleportCommands());
-		this.getCommand("tpaccept").setExecutor(new TeleportCommands());
-		this.getCommand("tpdeny").setExecutor(new TeleportCommands());
-		this.getCommand("tpcancel").setExecutor(new TeleportCommands());
-		this.getCommand("tp").setExecutor(new TeleportCommands());
-		this.getCommand("tp").setTabCompleter(new TeleportCommands());
-		this.getCommand("tphere").setExecutor(new TeleportCommands());
-		this.getCommand("tphere").setTabCompleter(new TeleportCommands());
-		this.getCommand("tpall").setExecutor(new TeleportCommands());
-		this.getCommand("home").setExecutor(new HomeCommands());
-		this.getCommand("home").setTabCompleter(new HomeCommands());
-		this.getCommand("homes").setExecutor(new HomeCommands());
-		this.getCommand("sethome").setExecutor(new HomeCommands());
-		this.getCommand("delhome").setExecutor(new HomeCommands());
-		this.getCommand("delhome").setTabCompleter(new HomeCommands());
-		this.getCommand("adminhome").setExecutor(new AdminHomeCommands());
-		this.getCommand("adminhome").setTabCompleter(new AdminHomeCommands());
-		this.getCommand("adminhomes").setExecutor(new AdminHomeCommands());
-		this.getCommand("adminhomes").setTabCompleter(new AdminHomeCommands());
-		this.getCommand("adminsethome").setExecutor(new AdminHomeCommands());
-		this.getCommand("adminsethome").setTabCompleter(new AdminHomeCommands());
-		this.getCommand("admindelhome").setExecutor(new AdminHomeCommands());
-		this.getCommand("admindelhome").setTabCompleter(new AdminHomeCommands());
-		this.getCommand("warp").setExecutor(new WarpCommands());
-		this.getCommand("warp").setTabCompleter(new WarpCommands());
-		this.getCommand("warps").setExecutor(new WarpCommands());
-		this.getCommand("setwarp").setExecutor(new WarpCommands());
-		this.getCommand("delwarp").setExecutor(new WarpCommands());
-		this.getCommand("delwarp").setTabCompleter(new WarpCommands());
-		this.getCommand("repair").setExecutor(new InventoryCommands());
-		this.getCommand("repairall").setExecutor(new InventoryCommands());
-		this.getCommand("invsee").setExecutor(new InventoryCommands());
-		this.getCommand("invsee").setTabCompleter(new InventoryCommands());
-		this.getCommand("enderchest").setExecutor(new InventoryCommands());
-		this.getCommand("enderchest").setTabCompleter(new InventoryCommands());
-		this.getCommand("clear").setExecutor(new InventoryCommands());
-		this.getCommand("clear").setTabCompleter(new InventoryCommands());
-		this.getCommand("gamemode").setExecutor(new GameCommands());
-		this.getCommand("gamemode").setTabCompleter(new GameCommands());
-		this.getCommand("gms").setExecutor(new GameCommands());
-		this.getCommand("gms").setTabCompleter(new GameCommands());
-		this.getCommand("gmc").setExecutor(new GameCommands());
-		this.getCommand("gmc").setTabCompleter(new GameCommands());
-		this.getCommand("gma").setExecutor(new GameCommands());
-		this.getCommand("gma").setTabCompleter(new GameCommands());
-		this.getCommand("gmsp").setExecutor(new GameCommands());
-		this.getCommand("gmsp").setTabCompleter(new GameCommands());
-		this.getCommand("speed").setExecutor(new GameCommands());
-		this.getCommand("speed").setTabCompleter(new GameCommands());
-		this.getCommand("fly").setExecutor(new GameCommands());
-		this.getCommand("fly").setTabCompleter(new GameCommands());
-		this.getCommand("god").setExecutor(new GameCommands());
-		this.getCommand("god").setTabCompleter(new GameCommands());
-		this.getCommand("heal").setExecutor(new GameCommands());
-		this.getCommand("heal").setTabCompleter(new GameCommands());
-		this.getCommand("feed").setExecutor(new GameCommands());
-		this.getCommand("feed").setTabCompleter(new GameCommands());
-		this.getCommand("jump").setExecutor(new TeleportCommands());
-		this.getCommand("top").setExecutor(new TeleportCommands());
-		this.getCommand("suicide").setExecutor(new GameCommands());
-		this.getCommand("kill").setExecutor(new GameCommands());
-		this.getCommand("kill").setTabCompleter(new GameCommands());
-		this.getCommand("disposal").setExecutor(new GameCommands());
-		this.getCommand("seen").setExecutor(new GameCommands());
-		this.getCommand("hat").setExecutor(new GameCommands());
-		this.getCommand("skull").setExecutor(new GameCommands());
-		this.getCommand("near").setExecutor(new GameCommands());
-		this.getCommand("broadcast").setExecutor(new GameCommands());
-		this.getCommand("money").setExecutor(new MoneyCommands());
+		Objects.requireNonNull(this.getCommand("tpa")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpahere")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpahere")).setTabCompleter(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpaccept")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpdeny")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpcancel")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tp")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tp")).setTabCompleter(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tphere")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tphere")).setTabCompleter(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("tpall")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("home")).setExecutor(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("home")).setTabCompleter(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("homes")).setExecutor(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("sethome")).setExecutor(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("delhome")).setExecutor(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("delhome")).setTabCompleter(new HomeCommands());
+		Objects.requireNonNull(this.getCommand("adminhome")).setExecutor(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("adminhome")).setTabCompleter(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("adminhomes")).setExecutor(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("adminhomes")).setTabCompleter(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("adminsethome")).setExecutor(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("adminsethome")).setTabCompleter(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("admindelhome")).setExecutor(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("admindelhome")).setTabCompleter(new AdminHomeCommands());
+		Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("warps")).setExecutor(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("delwarp")).setExecutor(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new WarpCommands());
+		Objects.requireNonNull(this.getCommand("repair")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("repairall")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("invsee")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("invsee")).setTabCompleter(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("enderchest")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("enderchest")).setTabCompleter(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("clear")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("clear")).setTabCompleter(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("gamemode")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gamemode")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gms")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gms")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gmc")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gmc")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gma")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gma")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gmsp")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("gmsp")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("speed")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("speed")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("fly")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("fly")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("god")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("god")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("heal")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("heal")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("feed")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("feed")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("jump")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("top")).setExecutor(new TeleportCommands());
+		Objects.requireNonNull(this.getCommand("suicide")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("kill")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("kill")).setTabCompleter(new GameCommands());
+		Objects.requireNonNull(this.getCommand("disposal")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("anvil")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("smithingtable")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("grindstone")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("enchantingtable")).setExecutor(new InventoryCommands());
+		Objects.requireNonNull(this.getCommand("seen")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("hat")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("skull")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("near")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("broadcast")).setExecutor(new GameCommands());
+		/*this.getCommand("money").setExecutor(new MoneyCommands());
 		this.getCommand("eco").setExecutor(new MoneyCommands());
 		this.getCommand("eco").setTabCompleter(new MoneyCommands());
 		this.getCommand("pay").setExecutor(new MoneyCommands());
 		this.getCommand("pay").setExecutor(new MoneyCommands());
-		this.getCommand("baltop").setExecutor(new MoneyCommands());
-		this.getCommand("workbench").setExecutor(new GameCommands());
-		this.getCommand("back").setExecutor(new GameCommands());
-		this.getCommand("back").setTabCompleter(new GameCommands());
+		this.getCommand("baltop").setExecutor(new MoneyCommands());*/
+		Objects.requireNonNull(this.getCommand("workbench")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("back")).setExecutor(new GameCommands());
+		Objects.requireNonNull(this.getCommand("back")).setTabCompleter(new GameCommands());
 
 		// EVENTI
-		getServer().getPluginManager().registerEvents((Listener)new UserLoader(),this);
-		getServer().getPluginManager().registerEvents((Listener)new DeathEvents(),this);
-		getServer().getPluginManager().registerEvents((Listener)new InventoryModifyEvent(),this);
+		getServer().getPluginManager().registerEvents(new UserLoader(),this);
+		getServer().getPluginManager().registerEvents(new DeathEvents(),this);
+		getServer().getPluginManager().registerEvents(new InventoryModifyEvent(),this);
+		getServer().getPluginManager().registerEvents(new InventoryCommands(),this);
 		
 		//Listeners
 		try {
 			UserLoader.load();
 		} catch (SQLException e) {e.printStackTrace();}
 		
-		MoneyFunctions.autobaltop(60);
+		//MoneyFunctions.autobaltop(60);
 		
 		Messages.load();
 		WarpsLoader.load();
@@ -245,7 +245,7 @@ public class Main extends JavaPlugin {
             return false;
         }
         getServer().getServicesManager().register(Economy.class, new EconomyImplementer(), this, ServicePriority.Normal);
-        econ = (Economy)new EconomyImplementer();
+        econ = new EconomyImplementer();
         return (econ != null);
     }
 
